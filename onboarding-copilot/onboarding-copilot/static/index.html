@@ -1,0 +1,2277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compass — Unified Onboarding Copilot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* ---- Theme system ---- */
+    /* Each theme sets a triad of accent stops used by the header gradient,
+       brand title, compass logo tile, rail glow, and the why-card. */
+    :root {
+      --t-1: #4338ca;   /* deepest / anchor */
+      --t-2: #7c3aed;   /* mid */
+      --t-3: #ec4899;   /* highlight */
+      --t-glow-a: rgba(99,102,241,0.12);
+      --t-glow-b: rgba(236,72,153,0.10);
+      --t-rail-a: rgba(99,102,241,0.06);
+      --t-rail-b: rgba(236,72,153,0.04);
+      --t-header-tint: #f5f3ff;
+      --t-why-a: #eef2ff;
+      --t-why-b: #f5f3ff;
+      --t-why-c: #fdf2f8;
+      --t-why-border: #e0e7ff;
+      --t-why-title: #312e81;
+      --t-why-body:  #3730a3;
+      /* Chat surface tints */
+      --t-chat-a:       #fbfaff;   /* top of the messages scroller */
+      --t-chat-b:       #f7f5ff;   /* bottom of the messages scroller */
+      --t-user-bg:      #ede9fe;   /* user bubble */
+      --t-user-fg:      #312e81;
+      --t-ai-bg:        #ffffff;   /* AI bubble */
+      --t-ai-border:    #e0e7ff;
+      --t-composer-bg:  #fbfaff;
+      --t-composer-border: #e5e7eb;
+    }
+    html[data-theme="sunset"] {
+      --t-1: #b45309; --t-2: #f97316; --t-3: #e11d48;
+      --t-glow-a: rgba(249,115,22,0.14); --t-glow-b: rgba(225,29,72,0.10);
+      --t-rail-a: rgba(249,115,22,0.07); --t-rail-b: rgba(225,29,72,0.05);
+      --t-header-tint: #fff7ed;
+      --t-why-a: #ffedd5; --t-why-b: #fff7ed; --t-why-c: #fef2f2;
+      --t-why-border: #fed7aa; --t-why-title: #7c2d12; --t-why-body: #9a3412;
+      --t-chat-a: #fff7ed; --t-chat-b: #fef2f2;
+      --t-user-bg: #ffedd5; --t-user-fg: #7c2d12;
+      --t-ai-bg: #ffffff; --t-ai-border: #fed7aa;
+      --t-composer-bg: #fff7ed; --t-composer-border: #fed7aa;
+    }
+    html[data-theme="forest"] {
+      --t-1: #047857; --t-2: #10b981; --t-3: #14b8a6;
+      --t-glow-a: rgba(16,185,129,0.14); --t-glow-b: rgba(20,184,166,0.10);
+      --t-rail-a: rgba(16,185,129,0.07); --t-rail-b: rgba(20,184,166,0.05);
+      --t-header-tint: #ecfdf5;
+      --t-why-a: #d1fae5; --t-why-b: #ecfdf5; --t-why-c: #f0fdfa;
+      --t-why-border: #a7f3d0; --t-why-title: #064e3b; --t-why-body: #065f46;
+      --t-chat-a: #ecfdf5; --t-chat-b: #f0fdfa;
+      --t-user-bg: #d1fae5; --t-user-fg: #064e3b;
+      --t-ai-bg: #ffffff; --t-ai-border: #a7f3d0;
+      --t-composer-bg: #ecfdf5; --t-composer-border: #a7f3d0;
+    }
+    /* --- Trending accent themes (tuned to work in BOTH light + dark mode) ---
+       Each uses a single strong hue anchored by neutrals, so the glow reads
+       against light cream AND against dark navy surfaces. */
+    html[data-theme="dayoflove"] {
+      --t-1: #be123c; --t-2: #ec4899; --t-3: #f472b6;
+      --t-glow-a: rgba(236,72,153,0.14); --t-glow-b: rgba(244,114,182,0.10);
+      --t-rail-a: rgba(236,72,153,0.06); --t-rail-b: rgba(244,114,182,0.04);
+      --t-header-tint: #fdf2f8;
+      --t-why-a: #fdf2f8; --t-why-b: #fce7f3; --t-why-c: #fbcfe8;
+      --t-why-border: #f9a8d4; --t-why-title: #831843; --t-why-body: #9d174d;
+      --t-chat-a: #fdf2f8; --t-chat-b: #fce7f3;
+      --t-user-bg: #fce7f3; --t-user-fg: #831843;
+      --t-ai-bg: #ffffff; --t-ai-border: #f9a8d4;
+      --t-composer-bg: #fdf2f8; --t-composer-border: #f9a8d4;
+    }
+
+    /* Choco Mint — warm cocoa accent with fresh mint highlight. */
+    html[data-theme="chocomint"] {
+      --t-1: #78350f; --t-2: #a16207; --t-3: #34d399;
+      --t-glow-a: rgba(120,53,15,0.12); --t-glow-b: rgba(52,211,153,0.10);
+      --t-rail-a: rgba(120,53,15,0.05); --t-rail-b: rgba(52,211,153,0.04);
+      --t-header-tint: #f0fdf4;
+      --t-why-a: #f0fdf4; --t-why-b: #fef3c7; --t-why-c: #ecfccb;
+      --t-why-border: #86efac; --t-why-title: #14532d; --t-why-body: #166534;
+      --t-chat-a: #f0fdf4; --t-chat-b: #ecfccb;
+      --t-user-bg: #d1fae5; --t-user-fg: #14532d;
+      --t-ai-bg: #ffffff; --t-ai-border: #86efac;
+      --t-composer-bg: #f0fdf4; --t-composer-border: #86efac;
+    }
+
+    /* Haberdashery — deep midnight blue, tailored/enterprise feel. */
+    html[data-theme="haberdashery"] {
+      --t-1: #0c4a6e; --t-2: #075985; --t-3: #0284c7;
+      --t-glow-a: rgba(12,74,110,0.14); --t-glow-b: rgba(2,132,199,0.10);
+      --t-rail-a: rgba(12,74,110,0.06); --t-rail-b: rgba(2,132,199,0.04);
+      --t-header-tint: #f0f9ff;
+      --t-why-a: #f0f9ff; --t-why-b: #e0f2fe; --t-why-c: #f0f9ff;
+      --t-why-border: #7dd3fc; --t-why-title: #0c4a6e; --t-why-body: #075985;
+      --t-chat-a: #f0f9ff; --t-chat-b: #e0f2fe;
+      --t-user-bg: #e0f2fe; --t-user-fg: #0c4a6e;
+      --t-ai-bg: #ffffff; --t-ai-border: #7dd3fc;
+      --t-composer-bg: #f0f9ff; --t-composer-border: #7dd3fc;
+    }
+
+    /* Midnight — near-black monochrome. Charcoal accent on soft warm gray in
+       light mode; jet-black surfaces in dark mode for a true monochrome look. */
+    html[data-theme="midnight"] {
+      --t-1: #171717; --t-2: #262626; --t-3: #404040;
+      --t-glow-a: rgba(38,38,38,0.12); --t-glow-b: rgba(64,64,64,0.08);
+      --t-rail-a: rgba(38,38,38,0.05); --t-rail-b: rgba(64,64,64,0.04);
+      --t-header-tint: #fafafa;
+      --t-why-a: #fafafa; --t-why-b: #f5f5f5; --t-why-c: #fafafa;
+      --t-why-border: #d4d4d4; --t-why-title: #171717; --t-why-body: #404040;
+      --t-chat-a: #fafafa; --t-chat-b: #f5f5f5;
+      --t-user-bg: #e5e5e5; --t-user-fg: #171717;
+      --t-ai-bg: #ffffff; --t-ai-border: #d4d4d4;
+      --t-composer-bg: #fafafa; --t-composer-border: #d4d4d4;
+    }
+    /* Midnight in dark mode — jet-black surfaces across the WHOLE UI
+       (header, rail, chat), not just the chat area. Overrides the default
+       navy-ish dark tokens for a Slack-style true monochrome look. */
+    html.dark[data-theme="midnight"] {
+      --t-chat-a: #0a0a0a;
+      --t-chat-b: #171717;
+      --t-ai-bg: #171717;
+      --t-ai-border: #404040;
+      --t-user-bg: #262626;
+      --t-user-fg: #f5f5f5;
+      --t-composer-bg: #0a0a0a;
+      --t-composer-border: #404040;
+      --t-header-tint: #0a0a0a;
+      --dark-surface: #000000;
+      --dark-surface-2: #0a0a0a;
+      --dark-surface-3: #262626;
+      --dark-border: #262626;
+      --t-why-a: #171717; --t-why-b: #0a0a0a; --t-why-c: #171717;
+      --t-why-border: #404040; --t-why-title: #f5f5f5; --t-why-body: #d4d4d4;
+    }
+    html.dark[data-theme="midnight"] body { background: #000000; }
+    html.dark[data-theme="midnight"] .app-header {
+      background: #000000;
+      border-bottom-color: #262626;
+    }
+    /* Kill the theme-tinted glow ellipses on the header so it stays pure black. */
+    html.dark[data-theme="midnight"] .app-header::after { opacity: 0; }
+    /* Brand title + subtitle are gradient-text on --t-1..--t-3; for Midnight
+       those tokens are near-black so the text vanishes on the black header.
+       Force white by disabling the gradient clip. */
+    html.dark[data-theme="midnight"] .brand-title,
+    html.dark[data-theme="midnight"] .brand-sub {
+      background: none;
+      -webkit-text-fill-color: #ffffff;
+      color: #ffffff;
+    }
+    html.dark[data-theme="midnight"] .brand-sparkle { color: #ffffff; }
+    /* Keep the compass emoji rendered as-is even in Midnight dark mode. */
+    html.dark[data-theme="midnight"] .brand-emoji {
+      -webkit-text-fill-color: initial !important;
+      color: initial !important;
+    }
+    /* Compass logo tile: swap the gradient fill for a solid dark tile with
+       a white outline so the needle reads on the black header. */
+    html.dark[data-theme="midnight"] .compass-logo {
+      background: #171717;
+      border: 1px solid #404040;
+    }
+    html.dark[data-theme="midnight"] .compass-logo svg { color: #ffffff; }
+    html.dark[data-theme="midnight"] .rail {
+      background: linear-gradient(180deg, #000000 0%, #0a0a0a 40%, #171717 100%);
+      border-right-color: #262626;
+    }
+    html.dark[data-theme="midnight"] .compass-logo {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    html.dark[data-theme="midnight"] .theme-picker {
+      background: rgba(23,23,23,0.7); border-color: #262626;
+    }
+    html.dark[data-theme="midnight"] .rail-item:hover {
+      background: #171717; border-color: #404040;
+    }
+    html.dark[data-theme="midnight"] .rail-item input[type="checkbox"] {
+      background: #0a0a0a; border-color: #525252;
+    }
+    html.dark[data-theme="midnight"] .rail-count { background: #171717; color: #a3a3a3; }
+    html.dark[data-theme="midnight"] .rail-icon { background: #171717; color: #d4d4d4; }
+    html.dark[data-theme="midnight"] .source-stat-pill {
+      background: #0a0a0a; border-color: #262626; color: #d4d4d4;
+    }
+    html.dark[data-theme="midnight"] .hero-input-shell {
+      background: #0a0a0a; border-color: #262626;
+    }
+    html.dark[data-theme="midnight"] .faq-row {
+      background: #0a0a0a; border-color: #262626;
+    }
+    html.dark[data-theme="midnight"] .faq-count {
+      background: #171717; color: #a3a3a3; border-color: #404040;
+    }
+    html.dark[data-theme="midnight"] .src-card { background: #0a0a0a; border-color: #262626; }
+    html.dark[data-theme="midnight"] .src-snippet {
+      background: #000000; border-color: #262626;
+    }
+
+    /* Lemon Lime — mustard-yellow into deep forest green. */
+    html[data-theme="lemonlime"] {
+      --t-1: #a16207; --t-2: #65a30d; --t-3: #16a34a;
+      --t-glow-a: rgba(161,98,7,0.12); --t-glow-b: rgba(22,163,74,0.10);
+      --t-rail-a: rgba(161,98,7,0.05); --t-rail-b: rgba(22,163,74,0.04);
+      --t-header-tint: #fefce8;
+      --t-why-a: #fefce8; --t-why-b: #ecfccb; --t-why-c: #fef9c3;
+      --t-why-border: #bef264; --t-why-title: #365314; --t-why-body: #4d7c0f;
+      --t-chat-a: #fefce8; --t-chat-b: #ecfccb;
+      --t-user-bg: #fef3c7; --t-user-fg: #365314;
+      --t-ai-bg: #ffffff; --t-ai-border: #bef264;
+      --t-composer-bg: #fefce8; --t-composer-border: #bef264;
+    }
+
+    /* Tritanopia — accessible palette that reads for blue-yellow color vision
+       deficiency. Uses reds/pinks/purples/cyans (skips blue+yellow contrast). */
+    html[data-theme="tritanopia"] {
+      --t-1: #b91c1c; --t-2: #ec4899; --t-3: #06b6d4;
+      --t-glow-a: rgba(185,28,28,0.12); --t-glow-b: rgba(6,182,212,0.10);
+      --t-rail-a: rgba(185,28,28,0.05); --t-rail-b: rgba(6,182,212,0.04);
+      --t-header-tint: #fef2f2;
+      --t-why-a: #fef2f2; --t-why-b: #fce7f3; --t-why-c: #ecfeff;
+      --t-why-border: #fca5a5; --t-why-title: #7f1d1d; --t-why-body: #991b1b;
+      --t-chat-a: #fef2f2; --t-chat-b: #fce7f3;
+      --t-user-bg: #fee2e2; --t-user-fg: #7f1d1d;
+      --t-ai-bg: #ffffff; --t-ai-border: #fca5a5;
+      --t-composer-bg: #fef2f2; --t-composer-border: #fca5a5;
+    }
+
+    /* Protanopia & Deuteranopia — accessible palette for red-green deficiency.
+       Uses blue-yellow contrast, avoids red vs green as the load-bearing pair. */
+    html[data-theme="protdeutan"] {
+      --t-1: #1e40af; --t-2: #7c3aed; --t-3: #ca8a04;
+      --t-glow-a: rgba(30,64,175,0.14); --t-glow-b: rgba(202,138,4,0.10);
+      --t-rail-a: rgba(30,64,175,0.06); --t-rail-b: rgba(202,138,4,0.04);
+      --t-header-tint: #eff6ff;
+      --t-why-a: #eff6ff; --t-why-b: #fef9c3; --t-why-c: #f5f3ff;
+      --t-why-border: #93c5fd; --t-why-title: #1e3a8a; --t-why-body: #1e40af;
+      --t-chat-a: #eff6ff; --t-chat-b: #fef9c3;
+      --t-user-bg: #dbeafe; --t-user-fg: #1e3a8a;
+      --t-ai-bg: #ffffff; --t-ai-border: #93c5fd;
+      --t-composer-bg: #eff6ff; --t-composer-border: #93c5fd;
+    }
+
+    /* Lemon — bright citrus yellows, cheerful and high-energy without
+       tipping into neon. */
+    html[data-theme="offwhite"] {
+      --t-1: #fde047; --t-2: #facc15; --t-3: #eab308;
+      --t-glow-a: rgba(250,204,21,0.16); --t-glow-b: rgba(234,179,8,0.12);
+      --t-rail-a: rgba(250,204,21,0.07); --t-rail-b: rgba(234,179,8,0.05);
+      --t-header-tint: #fefce8;
+      --t-why-a: #fefce8; --t-why-b: #fef9c3; --t-why-c: #fef08a;
+      --t-why-border: #fde047; --t-why-title: #713f12; --t-why-body: #854d0e;
+      --t-chat-a: #fefce8; --t-chat-b: #fef9c3;
+      --t-user-bg: #fef08a; --t-user-fg: #713f12;
+      --t-ai-bg: #ffffff; --t-ai-border: #fde047;
+      --t-composer-bg: #fefce8; --t-composer-border: #fde047;
+    }
+    /* Yellow LIGHT-mode brand fixes: the theme's --t-1..--t-3 are pale
+       yellows, which gradient-clip nearly white against the cream header
+       and make "Compass" + subtitle unreadable. Swap those elements to a
+       solid dark amber, and give the compass tile a dark background with
+       a bright yellow needle so the logo actually pops on light backgrounds. */
+    html:not(.dark)[data-theme="offwhite"] .brand-title,
+    html:not(.dark)[data-theme="offwhite"] .brand-sub {
+      background: none;
+      -webkit-background-clip: initial; background-clip: initial;
+      -webkit-text-fill-color: initial;
+      color: #713f12;  /* amber-900 — dark chocolate-amber, high contrast */
+    }
+    html:not(.dark)[data-theme="offwhite"] .brand-sub {
+      color: #854d0e;  /* amber-800 — slightly lighter for hierarchy */
+    }
+    html:not(.dark)[data-theme="offwhite"] .compass-logo {
+      background: linear-gradient(135deg, #854d0e 0%, #713f12 55%, #422006 100%);
+      box-shadow: 0 4px 14px rgba(66, 32, 6, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    html:not(.dark)[data-theme="offwhite"] .compass-logo svg { color: #fde047; }
+
+    /* Lemon dark mode — deep olive/warm charcoal surfaces so the yellow
+       accents pop without the whole page glowing. */
+    html.dark[data-theme="offwhite"] {
+      --t-chat-a: #1a1705;
+      --t-chat-b: #24200a;
+      --t-ai-bg: #1f1c08;
+      --t-ai-border: #854d0e;
+      --t-user-bg: #3a3010;
+      --t-user-fg: #fef08a;
+      --t-composer-bg: #1f1c08;
+      --t-composer-border: #854d0e;
+    }
+    html.dark[data-theme="offwhite"] .app-header {
+      background: linear-gradient(90deg, #1a1705 0%, #24200a 55%, #3a3010 100%);
+    }
+    html.dark[data-theme="offwhite"] .rail {
+      background: linear-gradient(180deg, #1a1705 0%, #24200a 40%, #1f1c08 100%);
+    }
+
+    /* ---- Dark mode ---- */
+    /* Independent of the accent theme — dark just swaps the surface + text tokens.
+       The five accent themes stay usable in dark mode; only surfaces flip. */
+    html.dark {
+      color-scheme: dark;
+      --t-header-tint: #0f172a;
+      --t-chat-a: #0b1220;
+      --t-chat-b: #0f172a;
+      --t-user-bg: #1e293b;
+      --t-user-fg: #e2e8f0;
+      --t-ai-bg: #111827;
+      --t-ai-border: #1f2937;
+      --t-composer-bg: #0f172a;
+      --t-composer-border: #1f2937;
+      --t-why-a: #111827; --t-why-b: #0f172a; --t-why-c: #111827;
+      --t-why-border: #1f2937; --t-why-title: #e2e8f0; --t-why-body: #cbd5e1;
+      --dark-surface: #0b1220;
+      --dark-surface-2: #111827;
+      --dark-surface-3: #1f2937;
+      --dark-text: #e5e7eb;
+      --dark-text-dim: #94a3b8;
+      --dark-border: #1f2937;
+    }
+    html.dark body { background: var(--dark-surface); color: var(--dark-text); }
+    /* In dark mode, tint the header + rail with the theme's accent (mixed
+       into the dark base) so each theme feels distinct instead of everything
+       looking like the same navy bar. Themes with their own explicit dark
+       override (midnight, offwhite) opt out below and use their
+       own custom surfaces. */
+    html.dark .app-header {
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--t-1) 12%, #0b1220) 0%,
+        color-mix(in srgb, var(--t-2) 14%, #0f172a) 55%,
+        color-mix(in srgb, var(--t-3) 16%, #111827) 100%);
+      border-bottom-color: var(--dark-border);
+    }
+    html.dark .rail {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--t-1) 8%, #0b1220) 0%,
+        color-mix(in srgb, var(--t-2) 10%, #0f172a) 40%,
+        #111827 100%);
+      border-right-color: var(--dark-border);
+    }
+    html.dark .rail-section-title { color: #64748b; }
+    html.dark .rail-divider {
+      background: linear-gradient(to right, transparent, #1f2937 20%, #1f2937 80%, transparent);
+    }
+    html.dark .rail-item:hover {
+      background: #1f2937;
+      border-color: #334155;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    html.dark .rail-item input[type="checkbox"] { background: #0f172a; border-color: #475569; }
+    html.dark .rail-label { color: #e2e8f0; }
+    html.dark .rail-count { background: #1f2937; color: #94a3b8; }
+    html.dark .rail-icon { background: #1f2937; color: #cbd5e1; }
+    html.dark .source-stat-pill {
+      background: #111827; border-color: #1f2937; color: #cbd5e1;
+    }
+    html.dark .theme-picker {
+      background: rgba(15,23,42,0.7); border-color: #1f2937;
+    }
+    html.dark .hero-title { color: #f1f5f9; }
+    html.dark .hero-sub { color: #94a3b8; }
+    html.dark .hero-input-shell {
+      background: #111827; border-color: #1f2937;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.45);
+    }
+    html.dark .hero-input-shell input { color: #e5e7eb; }
+    html.dark .hero-input-shell input::placeholder { color: #64748b; }
+    html.dark .hero-send { background: #e5e7eb; color: #0f172a; }
+    html.dark .faq-row {
+      background: #111827; border-color: #1f2937; color: #e5e7eb;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.35);
+    }
+    html.dark .faq-text { color: #e5e7eb; }
+    html.dark .faq-count { background: #1f2937; color: #94a3b8; border-color: #334155; }
+    html.dark .faq-heading-hint { color: #64748b; }
+    html.dark .src-card { background: #111827; border-color: #1f2937; }
+    html.dark .src-card.is-latest {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--t-3, #ec4899) 12%, #111827) 0%,
+        #111827 60%);
+    }
+    html.dark .src-title { color: #f1f5f9; }
+    html.dark .src-meta { color: #94a3b8; }
+    html.dark .src-snippet {
+      color: #e2e8f0; background: #0f172a; border-color: #1f2937;
+    }
+    html.dark .src-snippet code { background: #1f2937; color: #e2e8f0; }
+    html.dark .src-snippet table th,
+    html.dark .src-snippet table td {
+      border-color: #1f2937 !important;
+    }
+    html.dark .src-snippet table th {
+      background: #1f2937 !important; color: #e2e8f0 !important;
+    }
+    html.dark .src-snippet table tr:nth-child(even) td { background: #111827 !important; }
+    html.dark .src-snippet table tr:nth-child(odd) td  { background: #0f172a !important; }
+    html.dark .msg-user { background: var(--t-user-bg); color: var(--t-user-fg); }
+    html.dark .msg-ai { background: var(--t-ai-bg); border-color: var(--t-ai-border) !important; }
+    html.dark .composer-shell {
+      background: var(--t-composer-bg); border-top-color: var(--t-composer-border);
+    }
+    html.dark .composer-shell input {
+      background: #0f172a; border-color: #1f2937; color: #e5e7eb;
+    }
+    html.dark .composer-shell input::placeholder { color: #64748b; }
+    html.dark .composer-shell button {
+      background: #e5e7eb; color: #0f172a;
+    }
+    html.dark .msg-toolbtn {
+      background: rgba(15,23,42,0.85); color: #e2e8f0; border-color: #334155;
+    }
+    html.dark .msg-toolbtn:hover { background: #1f2937; }
+    html.dark #resetBtn, html.dark #sidebarToggleBtn {
+      background: rgba(17,24,39,0.7); color: #cbd5e1;
+      border-color: #1f2937;
+    }
+    html.dark #resetBtn:hover, html.dark #sidebarToggleBtn:hover {
+      color: #f1f5f9; border-color: #334155;
+    }
+    /* AI bubble body + citation card text — Tailwind classes force slate-800/500
+       which is unreadable on dark surfaces. Force override so answers, "Sources"
+       labels, meta lines, and citation card titles are all legible. */
+    html.dark .msg-ai .answer,
+    html.dark .msg-ai .answer * { color: #e5e7eb !important; }
+    html.dark .msg-ai .text-slate-500,
+    html.dark .msg-ai .text-slate-600,
+    html.dark .msg-ai .text-slate-800 { color: #cbd5e1 !important; }
+    html.dark .msg-ai .citations a {
+      background: #0f172a !important;
+      border-color: #1f2937 !important;
+      color: #e5e7eb !important;
+    }
+    html.dark .msg-ai .citations a:hover {
+      background: #111827 !important;
+      border-color: #334155 !important;
+    }
+    html.dark .msg-ai .citations .font-medium { color: #f1f5f9 !important; }
+    html.dark .msg-ai .citations .text-slate-500,
+    html.dark .msg-ai .citations .text-slate-800 { color: #cbd5e1 !important; }
+    /* "Latest source used" pill — light-mode uses pale amber-on-cream; in dark
+       mode we invert the surface to a darker amber-tinted panel so the text
+       actually reads. Selectors are stacked because Tailwind's bg/border
+       utilities are on the inner span, not .latest itself. */
+    html.dark .msg-ai .latest .bg-amber-50 {
+      background: #3b2a0a !important;
+      border-color: #78350f !important;
+    }
+    html.dark .msg-ai .latest .text-amber-900 { color: #fde68a !important; }
+    html.dark .msg-ai .latest .text-amber-900 b { color: #fef3c7 !important; }
+    html.dark .msg-ai .latest .opacity-70 { color: #fcd34d !important; opacity: 1 !important; }
+    /* Composer send button contrast — dark background + white text feels flipped
+       when the whole page is dark; keep it readable. */
+    html.dark .composer-shell button { background: #f1f5f9; color: #0f172a; }
+    /* User bubble text tokens set via CSS vars are already correct in dark
+       mode; this is a safety net for the utility class on the template. */
+    html.dark .msg-user { color: var(--t-user-fg) !important; }
+
+    /* ---- Table rendering inside a source snippet (light + dark) ----
+       Tables can be wide; we scroll horizontally inside the card instead of
+       pushing the whole AI bubble past its container. */
+    .src-snippet.is-table {
+      padding: 0;
+      overflow-x: auto;
+      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+    .src-snippet.is-table table {
+      width: max-content; min-width: 100%;
+      border-collapse: collapse; font-size: 12.5px;
+    }
+    .src-snippet.is-table th, .src-snippet.is-table td {
+      white-space: normal; word-break: break-word;
+      max-width: 240px;
+    }
+    /* Also guarantee the card's content column can't overflow the bubble. */
+    .src-card > div:last-child { min-width: 0; }
+    .src-snippet.is-table th, .src-snippet.is-table td {
+      border: 1px solid #eef2f7; padding: 6px 10px; text-align: left;
+      vertical-align: top;
+    }
+    .src-snippet.is-table th {
+      background: #f1f5f9; color: #0f172a;
+      font-weight: 700; letter-spacing: 0.01em;
+    }
+    .src-snippet.is-table tr:nth-child(even) td { background: #fafbff; }
+    .src-snippet.is-table p:last-child {
+      margin: 8px 12px 10px; font-size: 11.5px; color: #64748b; font-style: italic;
+    }
+    html.dark .src-snippet.is-table p:last-child { color: #94a3b8; }
+
+    /* ---- Edit / Copy actions on user messages ----
+       The wrap has left padding so the absolutely-positioned action pills
+       sit *inside* the wrap's hit area. Without this the mouse crosses a
+       dead zone between bubble and buttons and the hover state drops. */
+    .msg-user-wrap {
+      position: relative;
+      padding-left: 148px;
+    }
+    .msg-user-actions {
+      position: absolute; top: 4px; left: 8px;
+      display: flex; gap: 4px;
+      opacity: 0; transform: translateX(4px);
+      transition: opacity .15s ease, transform .15s ease;
+      pointer-events: none;
+    }
+    .msg-user-wrap:hover .msg-user-actions,
+    .msg-user-wrap:focus-within .msg-user-actions,
+    .msg-user-actions:hover {
+      opacity: 1; transform: none; pointer-events: auto;
+    }
+    .msg-toolbtn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 8px; border-radius: 999px;
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(6px);
+      border: 1px solid #e5e7eb;
+      font-size: 11px; color: #475569; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.05);
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .msg-toolbtn:hover { background: #ffffff; color: #0f172a; border-color: #cbd5e1; }
+    .msg-toolbtn.copied { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+
+    /* Inline edit mode — the bubble turns into a textarea in place. */
+    .msg-user.editing {
+      display: block;
+      min-width: 260px;
+      max-width: 42rem;
+      padding: 8px 10px;
+    }
+    .msg-user-editor {
+      width: 100%;
+      min-height: 40px; max-height: 240px;
+      resize: vertical;
+      border: 0; outline: none; background: transparent;
+      color: inherit;
+      font: inherit; font-size: 14px; line-height: 1.4;
+    }
+    .msg-user-edit-actions {
+      display: flex; justify-content: flex-end; gap: 6px;
+      margin-top: 8px;
+    }
+    .msg-user-edit-actions button {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      border: 1px solid #e5e7eb; background: #ffffff; color: #475569;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .msg-user-edit-actions button:hover { border-color: #cbd5e1; color: #0f172a; }
+    .msg-user-edit-actions .btn-send,
+    .msg-user-edit-actions .btn-send:hover,
+    .msg-user-edit-actions .btn-send:active,
+    .msg-user-edit-actions .btn-send:focus,
+    .msg-user-edit-actions .btn-send:focus-visible {
+      background: #111827; color: #ffffff !important; border-color: #111827;
+      outline: none;
+    }
+    .msg-user-edit-actions .btn-send:hover {
+      filter: brightness(1.08);
+    }
+    html.dark .msg-user-edit-actions button {
+      background: #0f172a; color: #cbd5e1; border-color: #334155;
+    }
+    html.dark .msg-user-edit-actions .btn-send,
+    html.dark .msg-user-edit-actions .btn-send:hover,
+    html.dark .msg-user-edit-actions .btn-send:active,
+    html.dark .msg-user-edit-actions .btn-send:focus,
+    html.dark .msg-user-edit-actions .btn-send:focus-visible {
+      background: #f1f5f9; color: #0f172a !important; border-color: #f1f5f9;
+    }
+
+    /* ---- Sidebar toggle + collapse ---- */
+    #sidebarToggleBtn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 10px; border-radius: 10px;
+      border: 1px solid #e5e7eb; background: rgba(255,255,255,0.7);
+      color: #475569; cursor: pointer; backdrop-filter: blur(6px);
+      font-size: 12px; font-weight: 600;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    #sidebarToggleBtn:hover {
+      background: #ffffff; color: #0f172a; border-color: #cbd5e1;
+    }
+    #sidebarToggleBtn .sb-label { letter-spacing: 0.01em; }
+    html[data-sidebar="hidden"] aside.rail { display: none !important; }
+
+    html, body { height: 100%; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+      background: #ffffff;
+      color: #111827;
+    }
+    .chip { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium; }
+    .msg-user {
+      background: var(--t-user-bg, #f4f4f5);
+      color: var(--t-user-fg, #111827);
+      transition: background .4s ease, color .4s ease;
+    }
+    .msg-ai {
+      background: var(--t-ai-bg, #ffffff);
+      border-color: var(--t-ai-border, #e5e7eb) !important;
+      transition: background .4s ease, border-color .4s ease;
+    }
+    /* Chat pane — tint the whole section so the theme reaches the edges */
+    .chat-pane {
+      background: linear-gradient(180deg, var(--t-chat-a, #ffffff) 0%, var(--t-chat-b, #ffffff) 100%);
+      transition: background .4s ease;
+    }
+    .prose-tight p { margin: 0.35rem 0; }
+    .fade-in { animation: fade .25s ease-out; }
+    @keyframes fade { from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+    .dot-typing::after { content: "▋"; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Sidebar shell — theme-tinted rail so it stays in sync with the header. */
+    .rail {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--t-1) 6%, var(--t-header-tint)) 0%,
+        var(--t-header-tint) 50%,
+        color-mix(in srgb, var(--t-3) 8%, var(--t-header-tint)) 100%);
+      border-right: 1px solid #e5e7eb;
+      position: relative;
+      transition: background .4s ease;
+    }
+    .rail::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 400px 200px at 100% 0%, var(--t-rail-a), transparent 60%),
+                  radial-gradient(ellipse 300px 200px at 0% 100%, var(--t-rail-b), transparent 60%);
+      pointer-events: none;
+    }
+    .rail > * { position: relative; }
+    .rail-section-title {
+      font-size: 10.5px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      font-weight: 700;
+      padding: 0 4px;
+    }
+    .rail-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e5e7eb 20%, #e5e7eb 80%, transparent);
+      margin: 6px 0 14px;
+    }
+    /* Flat filter row — a single container, no nested chip */
+    .rail-item {
+      display: grid;
+      grid-template-columns: auto 28px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      position: relative;
+    }
+    .rail-item:hover {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+    }
+    /* Checkbox — bigger, cleaner */
+    .rail-item input[type="checkbox"] {
+      appearance: none;
+      width: 16px; height: 16px; border-radius: 4px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      cursor: pointer;
+      display: grid; place-items: center;
+      transition: all .15s ease;
+    }
+    .rail-item input[type="checkbox"]:hover { border-color: var(--rail-accent, #6366f1); }
+    .rail-item input[type="checkbox"]:checked {
+      background: var(--rail-accent, #6366f1);
+      border-color: var(--rail-accent, #6366f1);
+    }
+    .rail-item input[type="checkbox"]:checked::after {
+      content: "✓"; color: #ffffff; font-size: 11px; font-weight: 800; line-height: 1;
+    }
+    /* Icon tile — one visible container of color, not two */
+    .rail-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: grid; place-items: center;
+      background: var(--rail-icon-bg, #f1f5f9);
+      color: var(--rail-icon-fg, #475569);
+      font-size: 13px;
+      flex-shrink: 0;
+      transition: transform .15s ease;
+    }
+    .rail-item:hover .rail-icon { transform: scale(1.06); }
+    .rail-label {
+      font-size: 13.5px; font-weight: 600; color: #1e293b; letter-spacing: -0.005em;
+    }
+    .rail-count {
+      font-size: 11.5px; font-weight: 600; color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 8px; border-radius: 999px;
+      min-width: 32px; text-align: center;
+    }
+    .rail-item:hover .rail-count {
+      background: var(--rail-accent-soft, #eef2ff);
+      color: var(--rail-accent, #4338ca);
+    }
+
+    /* Per-source / per-app palette variables */
+    .rail-item.confluence { --rail-accent: #0284c7; --rail-accent-soft: #e0f2fe; --rail-icon-bg: #e0f2fe; --rail-icon-fg: #0369a1; }
+    .rail-item.github     { --rail-accent: #111827; --rail-accent-soft: #e5e7eb; --rail-icon-bg: #1f2937; --rail-icon-fg: #f9fafb; }
+    .rail-item.sharepoint { --rail-accent: #059669; --rail-accent-soft: #d1fae5; --rail-icon-bg: #d1fae5; --rail-icon-fg: #047857; }
+    .rail-item.app-abc    { --rail-accent: #7c3aed; --rail-accent-soft: #ede9fe; --rail-icon-bg: #ede9fe; --rail-icon-fg: #6d28d9; }
+    .rail-item.app-ssm    { --rail-accent: #d97706; --rail-accent-soft: #fef3c7; --rail-icon-bg: #fef3c7; --rail-icon-fg: #b45309; }
+    .rail-item.app-epm    { --rail-accent: #e11d48; --rail-accent-soft: #ffe4e6; --rail-icon-bg: #ffe4e6; --rail-icon-fg: #be123c; }
+
+    /* Header — gradient sweep + rotating compass logo */
+    .app-header {
+      /* Tint the whole bar with the theme, not just the right edge. Anchored
+         on --t-header-tint (the theme's soft light tint) with subtle accent
+         wash on both edges from --t-glow-a/b so the bar reads as themed. */
+      background:
+        linear-gradient(90deg,
+          color-mix(in srgb, var(--t-1) 6%, var(--t-header-tint)) 0%,
+          var(--t-header-tint) 50%,
+          color-mix(in srgb, var(--t-3) 8%, var(--t-header-tint)) 100%);
+      border-bottom: 1px solid #e5e7eb;
+      position: relative; overflow: hidden;
+      transition: background .4s ease;
+    }
+    .app-header::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 500px 60px at 20% 100%, var(--t-glow-a), transparent 70%),
+        radial-gradient(ellipse 500px 60px at 80% 100%, var(--t-glow-b), transparent 70%);
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    .app-header > * { position: relative; }
+
+    .compass-logo {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--t-1) 0%, var(--t-2) 55%, var(--t-3) 100%);
+      display: grid; place-items: center;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      position: relative;
+      transition: background .4s ease;
+    }
+    .compass-logo svg {
+      width: 26px; height: 26px;
+      color: #fff;
+    }
+    .compass-needle {
+      transform-origin: 12px 12px;
+      animation: needleSpin 6s linear infinite;
+    }
+    @keyframes needleSpin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Keep the brand block on a single line so the theme picker can't push
+       "Navigating to appropriate docs" onto two rows. */
+    .brand-block { min-width: 0; white-space: nowrap; }
+    .brand-title {
+      font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+      background: linear-gradient(90deg, var(--t-1) 0%, var(--t-2) 55%, var(--t-3) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: background .4s ease;
+      white-space: nowrap;
+    }
+    .brand-sub {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+      background: linear-gradient(90deg, var(--t-1), var(--t-2), var(--t-3));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: background .4s ease;
+      white-space: nowrap;
+    }
+    .brand-sparkle {
+      display: inline-block;
+      -webkit-text-fill-color: initial;
+      animation: sparkleTwinkle 2.4s ease-in-out infinite;
+    }
+    /* Compass emoji stays as the OS's native colored glyph — no gradient
+       tinting, no theme overrides. */
+    .brand-emoji {
+      -webkit-text-fill-color: initial;
+      color: initial;
+    }
+    @keyframes sparkleTwinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.55; transform: scale(1.15); }
+    }
+    .source-stat-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 999px;
+      background: #ffffff; border: 1px solid #e5e7eb;
+      font-size: 12px; color: #475569; font-weight: 500;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+    }
+    .source-stat-pill .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .source-stat-pill.confluence .dot { background: #0ea5e9; }
+    .source-stat-pill.github     .dot { background: #111827; }
+    .source-stat-pill.sharepoint .dot { background: #059669; }
+
+    .why-card {
+      margin-top: 20px;
+      padding: 12px 12px 11px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--t-why-a) 0%, var(--t-why-b) 55%, var(--t-why-c) 100%);
+      border: 1px solid var(--t-why-border);
+      color: var(--t-why-body);
+      font-size: 11.5px;
+      line-height: 1.55;
+      position: relative;
+      overflow: hidden;
+      transition: background .4s ease, border-color .4s ease, color .4s ease;
+    }
+    .why-card::before {
+      content: "";
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, var(--t-1), var(--t-3));
+      opacity: 0.85;
+    }
+    .why-card .why-title {
+      font-weight: 700; margin-bottom: 4px; color: var(--t-why-title); font-size: 11.5px;
+      display: flex; align-items: center; gap: 6px;
+      letter-spacing: 0.02em;
+      transition: color .4s ease;
+    }
+    .why-card .why-title::before {
+      content: "✨"; font-size: 12px;
+    }
+
+    /* Theme picker in the header — grows with the number of swatches, so
+       keep gaps tight and let it wrap only on very small viewports. */
+    .theme-picker {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 6px; border-radius: 999px;
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+      border: 1px solid #e5e7eb;
+      flex-wrap: nowrap;
+    }
+    .theme-swatch {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px #e5e7eb, 0 1px 3px rgba(15,23,42,0.08);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+      position: relative;
+    }
+    .theme-swatch:hover { transform: scale(1.1); }
+    .theme-swatch.active {
+      box-shadow: 0 0 0 2px #111827, 0 2px 6px rgba(15,23,42,0.15);
+    }
+    .theme-swatch.active::after {
+      content: "✓";
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      color: #fff; font-size: 11px; font-weight: 700;
+      text-shadow: 0 0 2px rgba(0,0,0,0.4);
+    }
+    .theme-swatch[data-theme="default"] { background: linear-gradient(135deg, #4338ca, #7c3aed, #ec4899); }
+    .theme-swatch[data-theme="sunset"]  { background: linear-gradient(135deg, #b45309, #f97316, #e11d48); }
+    .theme-swatch[data-theme="forest"]  { background: linear-gradient(135deg, #047857, #10b981, #14b8a6); }
+    .theme-swatch[data-theme="dayoflove"]    { background: linear-gradient(135deg, #be123c, #ec4899, #f472b6); }
+    .theme-swatch[data-theme="chocomint"]    { background: linear-gradient(135deg, #78350f, #a16207, #34d399); }
+    .theme-swatch[data-theme="haberdashery"] { background: linear-gradient(135deg, #0c4a6e, #075985, #0284c7); }
+    .theme-swatch[data-theme="midnight"]     { background: linear-gradient(135deg, #0a0a0a, #262626, #404040); }
+    .theme-swatch[data-theme="lemonlime"]    { background: linear-gradient(135deg, #a16207, #65a30d, #16a34a); }
+    .theme-swatch[data-theme="tritanopia"]   { background: linear-gradient(135deg, #b91c1c, #ec4899, #06b6d4); }
+    .theme-swatch[data-theme="protdeutan"]   { background: linear-gradient(135deg, #1e40af, #7c3aed, #ca8a04); }
+    .theme-swatch[data-theme="offwhite"]     { background: linear-gradient(135deg, #fefce8, #fde047, #eab308); }
+    /* ---- Flip-flop dark-mode toggle in the header ----
+       A pill with a moon on the left and a sun on the right; the "thumb"
+       slides between them. Instantly readable: whichever side is highlighted
+       is the current mode, click to flip. */
+    #modeFlip {
+      position: relative;
+      display: inline-flex; align-items: center;
+      width: 72px; height: 32px; padding: 3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e0e7ff, #fef3c7);
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+      box-shadow: inset 0 1px 2px rgba(15,23,42,0.06);
+      transition: background .3s ease, border-color .3s ease;
+    }
+    html.dark #modeFlip {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-color: #1f2937;
+    }
+    #modeFlip .mf-icon {
+      flex: 1; display: grid; place-items: center;
+      font-size: 14px; line-height: 1;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 1;
+    }
+    #modeFlip .mf-moon { color: #64748b; opacity: .55; }
+    #modeFlip .mf-sun  { color: #b45309; opacity: 1; }
+    html.dark #modeFlip .mf-moon { color: #fde68a; opacity: 1; }
+    html.dark #modeFlip .mf-sun  { color: #64748b; opacity: .45; }
+    #modeFlip .mf-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 30px; height: 24px;
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.15), 0 0 0 1px rgba(15,23,42,0.04);
+      transform: translateX(32px);
+      transition: transform .25s ease, background .25s ease;
+      z-index: 0;
+    }
+    html.dark #modeFlip .mf-thumb {
+      background: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+      transform: translateX(0);
+    }
+
+    /* Big centered composer (ChatGPT landing look) */
+    .hero-wrap {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 48px 24px 24px;
+    }
+    .hero-title {
+      font-size: 30px; font-weight: 600; color: #111827; text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .hero-sub { color: #6b7280; text-align: center; margin-top: 8px; font-size: 14px; }
+    .hero-input-shell {
+      width: 100%;
+      max-width: 720px;
+      margin-top: 28px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      border-radius: 26px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(15,23,42,0.06);
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px 10px 18px;
+    }
+    .hero-input-shell input {
+      flex: 1; border: 0; outline: none; background: transparent;
+      font-size: 15px; padding: 10px 0;
+      color: #111827;
+    }
+    .hero-send {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #111827; color: #ffffff; display: grid; place-items: center;
+      font-size: 16px;
+      transition: opacity .15s;
+    }
+    .hero-send:disabled { opacity: 0.4; }
+
+    /* ---- FAQ suggestion cards under the hero input ---- */
+    .faq-heading {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px;
+    }
+    .faq-heading-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      background: linear-gradient(90deg, var(--t-1), var(--t-2), var(--t-3));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .faq-heading-dot {
+      width: 6px; height: 6px; border-radius: 999px;
+      background: var(--t-2, #7c3aed);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--t-2, #7c3aed) 18%, transparent);
+      animation: faqPulse 2.2s ease-in-out infinite;
+    }
+    .faq-heading-hint {
+      margin-left: auto;
+      font-size: 11px; color: #94a3b8;
+    }
+    @keyframes faqPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.55; transform: scale(1.25); }
+    }
+
+    .faq-list {
+      width: 100%; max-width: 880px; margin-top: 6px;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 720px) {
+      .faq-list { grid-template-columns: 1fr; }
+    }
+
+    .faq-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      width: 100%; text-align: left;
+      padding: 12px 14px;
+      color: #1f2937; font-size: 13.5px; line-height: 1.35;
+      background: #ffffff;
+      border: 1px solid #eef2f7;
+      border-radius: 14px;
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .faq-row::before {
+      /* soft theme wash behind the card, revealed on hover */
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--t-1, #4338ca) 6%, transparent) 0%,
+        color-mix(in srgb, var(--t-3, #ec4899) 4%, transparent) 100%);
+      opacity: 0;
+      transition: opacity .2s ease;
+      z-index: -1;
+    }
+    .faq-row:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--t-2, #7c3aed) 35%, #e5e7eb);
+      box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--t-2, #7c3aed) 45%, transparent),
+                  0 2px 6px -2px rgba(15, 23, 42, 0.06);
+    }
+    .faq-row:hover::before { opacity: 1; }
+    .faq-row:active { transform: translateY(0); }
+
+    .faq-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: grid; place-items: center; font-size: 16px;
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--t-1, #4338ca) 14%, #ffffff),
+        color-mix(in srgb, var(--t-3, #ec4899) 10%, #ffffff));
+      border: 1px solid color-mix(in srgb, var(--t-2, #7c3aed) 18%, #eef2ff);
+      color: var(--t-1, #4338ca);
+      flex-shrink: 0;
+      transition: transform .2s ease;
+    }
+    .faq-row:hover .faq-icon { transform: rotate(-4deg) scale(1.04); }
+
+    .faq-text {
+      color: #111827;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .faq-row.typing .faq-text::after {
+      content: "▋"; margin-left: 2px;
+      animation: blink 1s steps(1) infinite;
+      color: var(--t-2, #6366f1);
+    }
+    .faq-row.empty .faq-text { color: transparent; }
+
+    .faq-meta {
+      display: inline-flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+    }
+    .faq-count {
+      font-size: 10.5px; color: #64748b; background: #f1f5f9;
+      border: 1px solid #e2e8f0; border-radius: 999px;
+      padding: 2px 8px; font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .faq-trending {
+      font-size: 9.5px;
+      color: #b45309;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 1px solid #fcd34d;
+      border-radius: 999px;
+      padding: 2px 8px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em;
+      box-shadow: 0 1px 0 rgba(180, 83, 9, 0.08);
+    }
+    .faq-arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .18s ease, transform .18s ease;
+      color: var(--t-2, #6366f1);
+      font-size: 14px;
+      margin-left: 2px;
+    }
+    .faq-row:hover .faq-arrow { opacity: 1; transform: translateX(0); }
+
+    /* Compact composer at bottom (once a chat has started) */
+    .composer-shell {
+      border-top: 1px solid var(--t-composer-border, #e5e7eb);
+      background: var(--t-composer-bg, #ffffff);
+      transition: background .4s ease, border-color .4s ease;
+    }
+
+    /* ---- Source cards inside an AI message ---- */
+    .src-cards {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 14px;
+    }
+    .src-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      border-left: 3px solid color-mix(in srgb, var(--t-2, #7c3aed) 55%, #e5e7eb);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+    .src-card:hover {
+      border-color: color-mix(in srgb, var(--t-2, #7c3aed) 35%, #e5e7eb);
+      border-left-color: var(--t-2, #7c3aed);
+      box-shadow: 0 6px 18px -12px color-mix(in srgb, var(--t-2, #7c3aed) 55%, transparent);
+      transform: translateY(-1px);
+    }
+    .src-card.is-latest {
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--t-3, #ec4899) 5%, #ffffff) 0%,
+        #ffffff 60%);
+      border-left-color: #f59e0b;
+    }
+    .src-num {
+      width: 26px; height: 26px; border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--t-1, #4338ca), var(--t-2, #7c3aed));
+      box-shadow: 0 2px 6px -2px color-mix(in srgb, var(--t-2, #7c3aed) 60%, transparent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .src-head {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 6px;
+    }
+    .src-title {
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .src-title:hover { color: var(--t-1, #4338ca); text-decoration: underline; }
+    .src-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 600;
+      padding: 2px 8px; border-radius: 999px;
+      border: 1px solid;
+    }
+    .src-badge-confluence { background: #e0f2fe; color: #075985; border-color: #bae6fd; }
+    .src-badge-github     { background: #0f172a; color: #ffffff; border-color: #0f172a; }
+    .src-badge-sharepoint { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+    .src-latest-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 7px; border-radius: 999px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      color: #92400e; border: 1px solid #fcd34d;
+    }
+    .src-meta {
+      font-size: 11.5px; color: #64748b;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-left: auto;
+    }
+    .src-snippet {
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.55;
+      background: #f8fafc;
+      border: 1px solid #eef2f7;
+      border-radius: 8px;
+      padding: 10px 12px;
+      white-space: pre-wrap;
+    }
+    .src-snippet code {
+      background: #eef2f7; padding: 1px 5px; border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* ---- Attachment chips on source cards ---- */
+    .src-attachments {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 10px;
+    }
+    .src-attach {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      color: #0f172a;
+      font-size: 12.5px; font-weight: 600;
+      text-decoration: none;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .src-attach:hover {
+      transform: translateY(-1px);
+      border-color: #94a3b8;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+    .src-attach .att-ic {
+      width: 22px; height: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      font-size: 11px; font-weight: 800;
+      color: #ffffff; letter-spacing: 0.02em;
+    }
+    .src-attach .att-name { line-height: 1.1; }
+    .src-attach .att-dl {
+      font-size: 11px; color: #64748b; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 3px;
+    }
+    /* per-extension accent — recognizable at a glance */
+    .att-xlsx .att-ic, .att-xls .att-ic, .att-csv .att-ic  { background: #16a34a; }
+    .att-docx .att-ic, .att-doc .att-ic                    { background: #2563eb; }
+    .att-pptx .att-ic, .att-ppt .att-ic                    { background: #ea580c; }
+    .att-pdf .att-ic                                       { background: #dc2626; }
+    .att-zip .att-ic                                       { background: #64748b; }
+
+    html.dark .src-attach {
+      background: linear-gradient(135deg, #1f2937, #111827);
+      border-color: #334155;
+      color: #e2e8f0;
+    }
+    html.dark .src-attach:hover { border-color: #64748b; }
+    html.dark .src-attach .att-dl { color: #94a3b8; }
+
+    /* Inline file links auto-detected inside a plain-text snippet.
+       Replaces raw `[filename.xlsx](url)` markdown with a compact pill. */
+    .file-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 600; font-size: 12.5px;
+      text-decoration: none;
+      border: 1px solid #c7d2fe;
+      transition: background 120ms ease, border-color 120ms ease;
+      white-space: nowrap;
+    }
+    .file-link:hover { background: #e0e7ff; border-color: #a5b4fc; }
+    .file-link .fl-emoji { font-size: 13px; }
+    .file-link .fl-open  { font-size: 10.5px; opacity: 0.7; }
+    html.dark .file-link {
+      background: #1e293b; color: #c7d2fe; border-color: #334155;
+    }
+    html.dark .file-link:hover { background: #273449; border-color: #475569; }
+
+    /* ---- Hero (top-match) card treatment ------------------------------- */
+    /* The #1 result gets a bigger footprint, a lead paragraph, and a pill
+       so users immediately see it as the best answer, not just one of four. */
+    .src-card.is-top {
+      background: linear-gradient(180deg, #ffffff, var(--t-why-b, #f5f3ff));
+      border: 1.5px solid var(--t-why-border, #c7d2fe);
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.08);
+      padding: 16px 18px;
+    }
+    .src-card.is-top .src-title { font-size: 16px; }
+    .src-top-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--t-1, #4338ca), var(--t-3, #ec4899));
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .src-hero-lead {
+      font-size: 13.5px; line-height: 1.6; color: #1e293b;
+      margin: 4px 0 10px 0;
+      padding: 10px 12px;
+      background: #ffffff;
+      border-left: 3px solid var(--t-2, #7c3aed);
+      border-radius: 6px;
+    }
+    html.dark .src-card.is-top {
+      background: linear-gradient(180deg, #0f172a, #1e1b4b);
+      border-color: #4338ca;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+    }
+    html.dark .src-hero-lead {
+      background: #0b1120; color: #e2e8f0; border-left-color: #7c3aed;
+    }
+  </style>
+</head>
+<body>
+
+<div class="min-h-full flex flex-col">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="mx-auto px-6 py-3 flex items-center justify-between gap-6" style="max-width: min(1600px, 100%);">
+      <div class="flex items-center gap-3">
+        <button
+          id="sidebarToggleBtn"
+          type="button"
+          title="Show/hide the sidebar"
+          aria-label="Show or hide sidebar"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <line x1="9" y1="4" x2="9" y2="20" />
+          </svg>
+          <span class="sb-label">Sidebar</span>
+        </button>
+        <div class="compass-logo" aria-label="Compass">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" fill="none" opacity="0.85"/>
+            <circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.35"/>
+            <g class="compass-needle">
+              <path d="M12 4 L13.6 12 L12 20 L10.4 12 Z" fill="#ffffff" opacity="0.98"/>
+              <path d="M12 4 L13.6 12 L10.4 12 Z" fill="#fca5a5"/>
+              <circle cx="12" cy="12" r="1.4" fill="#1e1b4b" stroke="#fff" stroke-width="0.6"/>
+            </g>
+            <text x="12" y="3.6" text-anchor="middle" font-size="2.4" fill="currentColor" font-family="ui-sans-serif,system-ui" font-weight="700">N</text>
+          </svg>
+        </div>
+        <div class="brand-block">
+          <h1 class="brand-title leading-tight">Compass</h1>
+          <p class="brand-sub"><span class="brand-emoji">🧭</span> Navigating to appropriate docs <span class="brand-sparkle">✨</span></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 flex-nowrap">
+        <div id="sourceStats" class="hidden xl:flex items-center gap-2"></div>
+        <button id="modeFlip" type="button" role="switch" aria-label="Toggle light or dark mode" title="Toggle light / dark mode">
+          <span class="mf-thumb" aria-hidden="true"></span>
+          <span class="mf-icon mf-moon" aria-hidden="true">🌙</span>
+          <span class="mf-icon mf-sun" aria-hidden="true">☀️</span>
+        </button>
+        <div id="themePicker" class="theme-picker" title="Pick a color theme">
+          <button type="button" class="theme-swatch" data-theme="default" title="Aurora"></button>
+          <button type="button" class="theme-swatch" data-theme="sunset"  title="Sunset"></button>
+          <button type="button" class="theme-swatch" data-theme="forest"  title="Forest"></button>
+          <button type="button" class="theme-swatch" data-theme="dayoflove"    title="Day of Love"></button>
+          <button type="button" class="theme-swatch" data-theme="chocomint"    title="Choco Mint"></button>
+          <button type="button" class="theme-swatch" data-theme="haberdashery" title="Haberdashery"></button>
+          <button type="button" class="theme-swatch" data-theme="midnight"     title="Midnight"></button>
+          <button type="button" class="theme-swatch" data-theme="lemonlime"    title="Lemon Lime"></button>
+          <button type="button" class="theme-swatch" data-theme="tritanopia"   title="Tritanopia"></button>
+          <button type="button" class="theme-swatch" data-theme="protdeutan"   title="Protanopia & Deuteranopia"></button>
+          <button type="button" class="theme-swatch" data-theme="offwhite"     title="Yellow"></button>
+        </div>
+        <button
+          id="resetBtn"
+          title="Clear this chat and start fresh"
+          class="text-xs text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-lg px-3 py-1.5 flex items-center gap-1.5 bg-white/70 backdrop-blur"
+        >
+          <span>🗑️</span><span class="hidden sm:inline">Reset chat</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 flex">
+    <!-- Left rail -->
+    <aside class="hidden lg:block w-72 rail px-4 py-5">
+      <h2 class="rail-section-title mb-2">Sources</h2>
+      <div id="sourceFilters" class="flex flex-col gap-0.5"></div>
+
+      <div class="rail-divider"></div>
+
+      <h2 class="rail-section-title mb-2">Applications</h2>
+      <div id="appFilters" class="flex flex-col gap-0.5"></div>
+
+      <div class="why-card">
+        <div class="why-title">Why this is different</div>
+        Answers cite sources, prefer the <b>latest</b> updated doc, and flag conflicting policy versions — critical for regulated environments.
+      </div>
+    </aside>
+
+    <!-- Chat pane -->
+    <section class="flex-1 flex flex-col chat-pane">
+      <!-- Hero (initial landing) -->
+      <div id="hero" class="flex-1 flex items-center justify-center">
+        <div class="hero-wrap w-full">
+          <div class="hero-title">What can I help you with today?</div>
+          <div class="hero-sub">Ask across Confluence, GitHub, and SharePoint — answers cite sources and prefer the latest doc.</div>
+
+          <form id="heroForm" class="hero-input-shell">
+            <span class="text-slate-400 text-lg">＋</span>
+            <input
+              id="heroInput"
+              type="text"
+              placeholder="Ask anything…"
+              autocomplete="off"
+              autofocus
+            />
+            <button id="heroSend" type="submit" class="hero-send" aria-label="Send">↑</button>
+          </form>
+
+          <div class="w-full max-w-[880px] mt-8">
+            <div class="faq-heading">
+              <span class="faq-heading-dot" aria-hidden="true"></span>
+              <span class="faq-heading-title">Frequently asked</span>
+              <span class="faq-heading-hint">Tap a card to ask</span>
+            </div>
+            <div id="faqList" class="faq-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat scroller (hidden until first message) -->
+      <div id="messages" class="hidden flex-1 overflow-y-auto px-6 py-6 space-y-4 max-w-4xl w-full mx-auto"></div>
+
+      <!-- Compact composer (hidden until first message) -->
+      <div id="composerDock" class="hidden composer-shell">
+        <form id="askForm" class="max-w-4xl mx-auto px-6 py-4 flex gap-3">
+          <input
+            id="q"
+            type="text"
+            placeholder="Ask a follow-up…"
+            class="flex-1 rounded-full border border-slate-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-100 outline-none px-5 py-3 text-sm bg-white"
+          />
+          <button
+            id="askBtn"
+            class="rounded-full bg-slate-900 hover:bg-black text-white font-medium px-5 py-3 text-sm disabled:opacity-50"
+          >
+            Ask
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<template id="tpl-user-msg">
+  <div class="fade-in flex justify-end">
+    <div class="msg-user-wrap">
+      <div class="msg-user-actions">
+        <button type="button" class="msg-toolbtn msg-copy" title="Copy this prompt">
+          <span aria-hidden="true">📋</span><span>Copy</span>
+        </button>
+        <button type="button" class="msg-toolbtn msg-edit" title="Edit and re-send">
+          <span aria-hidden="true">✏️</span><span>Edit</span>
+        </button>
+      </div>
+      <div class="msg-user rounded-2xl rounded-br-sm px-4 py-2 max-w-2xl shadow-sm text-sm"></div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-ai-msg">
+  <div class="fade-in flex justify-start">
+    <div class="msg-ai border border-slate-200 rounded-2xl rounded-bl-sm px-5 py-4 max-w-3xl shadow-sm text-sm w-full">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="w-6 h-6 rounded-full bg-slate-900 text-white grid place-items-center text-xs font-bold">C</div>
+        <div class="text-xs text-slate-500">Compass · synthesized from your connected sources</div>
+      </div>
+      <div class="answer prose-tight text-slate-800"></div>
+      <div class="src-cards-wrap"></div>
+      <div class="latest mt-3"></div>
+      <div class="citations mt-4 border-t pt-3"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+const SOURCE_META = {
+  confluence: { color: "bg-sky-100 text-sky-800 border-sky-200", label: "Confluence", icon: "📘" },
+  github:     { color: "bg-slate-900 text-white border-slate-900",  label: "GitHub",     icon: "💻" },
+  sharepoint: { color: "bg-emerald-100 text-emerald-800 border-emerald-200", label: "SharePoint", icon: "📂" },
+};
+
+// FAQs are fetched from /api/faqs — the backend returns the top N by
+// ask-count (with seeded defaults backfilled), plus a "trending" flag
+// for anything asked repeatedly in the last 24h.
+let FAQS = [];
+
+const heroEl = document.getElementById("hero");
+const heroForm = document.getElementById("heroForm");
+const heroInput = document.getElementById("heroInput");
+const heroSend = document.getElementById("heroSend");
+const faqListEl = document.getElementById("faqList");
+const messagesEl = document.getElementById("messages");
+const composerDock = document.getElementById("composerDock");
+const form = document.getElementById("askForm");
+const qInput = document.getElementById("q");
+const askBtn = document.getElementById("askBtn");
+const sourceStatsEl = document.getElementById("sourceStats");
+const sourceFiltersEl = document.getElementById("sourceFilters");
+const appFiltersEl = document.getElementById("appFilters");
+const resetBtn = document.getElementById("resetBtn");
+
+const STORAGE_KEY = "compass.chat.v1";
+const THEME_KEY = "compass.theme.v1";
+const DARK_KEY = "compass.dark.v1";
+const SIDEBAR_KEY = "compass.sidebar.v1";
+
+const VALID_THEMES = new Set([
+  "default", "sunset", "forest",
+  "dayoflove",
+  "chocomint", "haberdashery", "midnight", "lemonlime",
+  "tritanopia", "protdeutan",
+  "offwhite",
+]);
+
+function applyTheme(name) {
+  if (!VALID_THEMES.has(name)) name = "default";
+  if (name === "default") {
+    document.documentElement.removeAttribute("data-theme");
+  } else {
+    document.documentElement.setAttribute("data-theme", name);
+  }
+  document.querySelectorAll(".theme-swatch").forEach((s) => {
+    s.classList.toggle("active", s.dataset.theme === name);
+  });
+  try { localStorage.setItem(THEME_KEY, name); } catch {}
+}
+
+function initTheme() {
+  let saved = "default";
+  try { saved = localStorage.getItem(THEME_KEY) || "default"; } catch {}
+  applyTheme(saved);
+  document.querySelectorAll(".theme-swatch").forEach((s) => {
+    s.addEventListener("click", () => applyTheme(s.dataset.theme));
+  });
+}
+
+function applyDark(on) {
+  document.documentElement.classList.toggle("dark", !!on);
+  const flip = document.getElementById("modeFlip");
+  if (flip) {
+    flip.setAttribute("aria-checked", on ? "true" : "false");
+    flip.title = on ? "Switch to light mode" : "Switch to dark mode";
+  }
+  try { localStorage.setItem(DARK_KEY, on ? "1" : "0"); } catch {}
+}
+
+function initDarkMode() {
+  let saved = false;
+  try { saved = localStorage.getItem(DARK_KEY) === "1"; } catch {}
+  applyDark(saved);
+  const flip = document.getElementById("modeFlip");
+  if (flip) {
+    flip.addEventListener("click", () => {
+      applyDark(!document.documentElement.classList.contains("dark"));
+    });
+  }
+}
+
+function applySidebar(hidden) {
+  document.documentElement.setAttribute("data-sidebar", hidden ? "hidden" : "shown");
+  const btn = document.getElementById("sidebarToggleBtn");
+  if (btn) btn.title = hidden ? "Show sidebar" : "Hide sidebar";
+  try { localStorage.setItem(SIDEBAR_KEY, hidden ? "hidden" : "shown"); } catch {}
+}
+
+function initSidebar() {
+  let saved = "shown";
+  try { saved = localStorage.getItem(SIDEBAR_KEY) || "shown"; } catch {}
+  applySidebar(saved === "hidden");
+  const btn = document.getElementById("sidebarToggleBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const isHidden = document.documentElement.getAttribute("data-sidebar") === "hidden";
+      applySidebar(!isHidden);
+    });
+  }
+}
+
+const state = {
+  enabledSources: new Set(["confluence", "github", "sharepoint"]),
+  enabledApps: new Set(["abc", "ssm", "epm"]),
+  history: [],
+};
+
+const APP_META = {
+  abc: { color: "bg-violet-100 text-violet-800 border-violet-200", label: "ABC", icon: "📊" },
+  ssm: { color: "bg-amber-100 text-amber-800 border-amber-200",    label: "SSM", icon: "🔧" },
+  epm: { color: "bg-rose-100 text-rose-800 border-rose-200",       label: "EPM", icon: "💹" },
+};
+
+function appChip(code) {
+  const m = APP_META[code];
+  return `<span class="chip border ${m.color}">${m.icon} ${m.label}</span>`;
+}
+
+function saveHistory() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.history));
+  } catch (e) {
+    console.warn("localStorage save failed", e);
+  }
+}
+
+// Serialize the last few conversation turns for /api/ask. We drop the just-pushed
+// user turn (the current question) since the backend already has it as `query`,
+// and we flatten AI payloads to a short text form so the wire stays small.
+function recentHistoryForApi(maxTurns = 6) {
+  const h = state.history || [];
+  // Exclude the last entry if it's the current user question we just pushed.
+  const upto = h.length && h[h.length - 1].role === "user" ? h.length - 1 : h.length;
+  const slice = h.slice(Math.max(0, upto - maxTurns), upto);
+  return slice.map((t) => {
+    if (t.role === "user") return { role: "user", text: t.text || "" };
+    const ans = (t.payload && t.payload.answer) || "";
+    return { role: "ai", text: ans.slice(0, 400) };
+  });
+}
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function clearHistory() {
+  state.history = [];
+  try { localStorage.removeItem(STORAGE_KEY); } catch {}
+  messagesEl.innerHTML = "";
+  showHero();
+}
+
+function showHero() {
+  heroEl.classList.remove("hidden");
+  messagesEl.classList.add("hidden");
+  composerDock.classList.add("hidden");
+  heroInput.focus();
+}
+
+function showChat() {
+  heroEl.classList.add("hidden");
+  messagesEl.classList.remove("hidden");
+  composerDock.classList.remove("hidden");
+}
+
+function chip(source, extraCls = "") {
+  const m = SOURCE_META[source];
+  return `<span class="chip border ${m.color} ${extraCls}">${m.icon} ${m.label}</span>`;
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+async function loadSources() {
+  const res = await fetch("/api/sources");
+  const data = await res.json();
+
+  sourceStatsEl.innerHTML = data.sources
+    .map(
+      (s) => `<span class="source-stat-pill ${s.name}">
+        <span class="dot"></span>${SOURCE_META[s.name].label}
+        <span class="text-slate-400">${s.doc_count}</span>
+      </span>`
+    )
+    .join("");
+
+  sourceFiltersEl.innerHTML = data.sources
+    .map(
+      (s) => `
+      <label class="rail-item ${s.name}">
+        <input type="checkbox" data-src="${s.name}" checked />
+        <span class="rail-icon">${SOURCE_META[s.name].icon}</span>
+        <span class="rail-label">${SOURCE_META[s.name].label}</span>
+        <span class="rail-count">${s.doc_count}</span>
+      </label>`
+    )
+    .join("");
+
+  sourceFiltersEl.querySelectorAll("input[type=checkbox]").forEach((el) => {
+    el.addEventListener("change", () => {
+      const src = el.dataset.src;
+      if (el.checked) state.enabledSources.add(src);
+      else state.enabledSources.delete(src);
+    });
+  });
+
+  const apps = data.apps || [];
+  appFiltersEl.innerHTML = apps
+    .map(
+      (a) => `
+      <label class="rail-item app-${a.id}">
+        <input type="checkbox" data-app="${a.id}" checked />
+        <span class="rail-icon">${APP_META[a.id].icon}</span>
+        <span class="rail-label">${APP_META[a.id].label}</span>
+        <span class="rail-count">${a.doc_count}</span>
+      </label>`
+    )
+    .join("");
+  appFiltersEl.querySelectorAll("input[type=checkbox]").forEach((el) => {
+    el.addEventListener("change", () => {
+      const app = el.dataset.app;
+      if (el.checked) state.enabledApps.add(app);
+      else state.enabledApps.delete(app);
+    });
+  });
+
+  await loadFaqs({ animate: true });
+}
+
+async function loadFaqs({ animate }) {
+  try {
+    const res = await fetch("/api/faqs?limit=6");
+    const data = await res.json();
+    FAQS = data.faqs || [];
+  } catch (e) {
+    console.warn("faq fetch failed", e);
+    FAQS = [];
+  }
+
+  faqListEl.innerHTML = FAQS.map(
+    (f, idx) => {
+      const meta = [];
+      if (f.trending) meta.push(`<span class="faq-trending">🔥 Trending</span>`);
+      if (f.count > 0) meta.push(`<span class="faq-count">× ${f.count}</span>`);
+      const metaHtml = meta.length ? `<span class="faq-meta">${meta.join("")}</span>` : "";
+      return `
+        <button type="button" class="faq-row empty" data-idx="${idx}" data-full="${(f.q || "").replace(/"/g, "&quot;")}">
+          <span class="faq-icon">${f.icon || "💬"}</span>
+          <span class="faq-text"></span>
+          <span class="faq-meta-wrap flex items-center gap-2">
+            ${metaHtml}
+            <span class="faq-arrow" aria-hidden="true">→</span>
+          </span>
+        </button>`;
+    }
+  ).join("");
+  const rows = Array.from(faqListEl.querySelectorAll(".faq-row"));
+  rows.forEach((row) => {
+    row.addEventListener("click", () => {
+      const q = row.dataset.full;
+      if (!q) return;
+      ask(q);
+    });
+  });
+  if (animate) {
+    typeFaqs(rows);
+  } else {
+    // Skip the typewriter on refresh so the list just quietly updates.
+    rows.forEach((row) => {
+      row.classList.remove("empty");
+      row.querySelector(".faq-text").textContent = row.dataset.full || "";
+    });
+  }
+}
+
+function typeFaqs(rows) {
+  const CHAR_MS = 14;
+  const GAP_MS = 180;
+  let i = 0;
+  function typeNext() {
+    if (i >= rows.length) return;
+    const row = rows[i];
+    const full = row.dataset.full || "";
+    const textEl = row.querySelector(".faq-text");
+    row.classList.remove("empty");
+    row.classList.add("typing");
+    textEl.textContent = "";
+    let j = 0;
+    const tick = setInterval(() => {
+      textEl.textContent = full.slice(0, j + 1);
+      j++;
+      if (j >= full.length) {
+        clearInterval(tick);
+        row.classList.remove("typing");
+        i++;
+        setTimeout(typeNext, GAP_MS);
+      }
+    }, CHAR_MS);
+  }
+  typeNext();
+}
+
+function renderUserMessage(text) {
+  const t = document.getElementById("tpl-user-msg").content.cloneNode(true);
+  const bubble = t.querySelector(".msg-user");
+  bubble.textContent = text;
+  const copyBtn = t.querySelector(".msg-copy");
+  const editBtn = t.querySelector(".msg-edit");
+  copyBtn.addEventListener("click", () => copyPrompt(bubble, copyBtn));
+  editBtn.addEventListener("click", () => enterInlineEdit(bubble));
+  messagesEl.appendChild(t);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function copyPrompt(bubble, btn) {
+  const text = bubble.textContent || "";
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Fallback for older browsers / non-HTTPS contexts.
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch {}
+    ta.remove();
+  }
+  const originalHtml = btn.innerHTML;
+  btn.innerHTML = '<span aria-hidden="true">✅</span><span>Copied</span>';
+  btn.classList.add("copied");
+  setTimeout(() => {
+    btn.innerHTML = originalHtml;
+    btn.classList.remove("copied");
+  }, 1200);
+}
+
+function enterInlineEdit(bubble) {
+  if (bubble.classList.contains("editing")) return;
+  const originalText = bubble.textContent || "";
+  bubble.dataset.originalText = originalText;
+  bubble.classList.add("editing");
+  bubble.innerHTML = `
+    <textarea class="msg-user-editor" spellcheck="true"></textarea>
+    <div class="msg-user-edit-actions">
+      <button type="button" class="btn-cancel">Cancel</button>
+      <button type="button" class="btn-send">Send ↑</button>
+    </div>
+  `;
+  const editor = bubble.querySelector(".msg-user-editor");
+  editor.value = originalText;
+  // Auto-grow the textarea so the user can see what they're editing.
+  const autoGrow = () => {
+    editor.style.height = "auto";
+    editor.style.height = Math.min(editor.scrollHeight, 240) + "px";
+  };
+  editor.addEventListener("input", autoGrow);
+  autoGrow();
+  editor.focus();
+  const len = editor.value.length;
+  try { editor.setSelectionRange(len, len); } catch {}
+
+  const cancel = () => exitInlineEdit(bubble, originalText);
+  const send = () => {
+    const next = (editor.value || "").trim();
+    if (!next) return;
+    // Update the same bubble in place, drop the answer that was tied to it
+    // (and anything downstream in this chat), then re-ask so the new answer
+    // takes the old slot right below the edited bubble.
+    exitInlineEdit(bubble, next);
+    updateUserHistoryForBubble(bubble, next);
+    dropTurnsAfterUserBubble(bubble);
+    ask(next, { skipUserMessage: true });
+  };
+  bubble.querySelector(".btn-cancel").addEventListener("click", cancel);
+  bubble.querySelector(".btn-send").addEventListener("click", send);
+  editor.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+    else if (e.key === "Escape") { e.preventDefault(); cancel(); }
+  });
+}
+
+function exitInlineEdit(bubble, text) {
+  bubble.classList.remove("editing");
+  bubble.textContent = text;
+}
+
+// Given an edited bubble, map it to its slot in state.history and rewrite the
+// text. We match by DOM position — the Nth .msg-user bubble in the chat
+// corresponds to the Nth "user" turn in history.
+function updateUserHistoryForBubble(bubble, newText) {
+  const bubbles = Array.from(messagesEl.querySelectorAll(".msg-user"));
+  const pos = bubbles.indexOf(bubble);
+  if (pos < 0) return;
+  let seen = 0;
+  for (let i = 0; i < state.history.length; i++) {
+    if (state.history[i].role !== "user") continue;
+    if (seen === pos) {
+      state.history[i] = { role: "user", text: newText };
+      saveHistory();
+      return;
+    }
+    seen++;
+  }
+}
+
+// Remove everything in the chat and history AFTER the edited user bubble —
+// i.e. drop the AI answer that was tied to it (and any downstream turns).
+// The next ask() call then appends the new answer directly below the bubble.
+function dropTurnsAfterUserBubble(bubble) {
+  const wrap = bubble.closest(".fade-in");
+  if (!wrap) return;
+  const children = Array.from(messagesEl.children);
+  const idx = children.indexOf(wrap);
+  if (idx < 0) return;
+  for (let i = children.length - 1; i > idx; i--) children[i].remove();
+
+  // History: keep everything up to and including this user turn.
+  const bubbles = Array.from(messagesEl.querySelectorAll(".msg-user"));
+  const pos = bubbles.indexOf(bubble);
+  if (pos < 0) return;
+  let seen = 0;
+  for (let i = 0; i < state.history.length; i++) {
+    if (state.history[i].role !== "user") continue;
+    if (seen === pos) {
+      state.history = state.history.slice(0, i + 1);
+      saveHistory();
+      return;
+    }
+    seen++;
+  }
+}
+
+function pushUserMessage(text) {
+  state.history.push({ role: "user", text });
+  saveHistory();
+  renderUserMessage(text);
+}
+
+function pushLoading() {
+  const wrap = document.createElement("div");
+  wrap.className = "fade-in flex justify-start";
+  wrap.innerHTML = `
+    <div class="msg-ai border border-slate-200 rounded-2xl rounded-bl-sm px-5 py-4 max-w-3xl shadow-sm text-sm">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="w-6 h-6 rounded-full bg-slate-900 text-white grid place-items-center text-xs font-bold">C</div>
+        <div class="text-xs text-slate-500">Searching Confluence · GitHub · SharePoint…</div>
+      </div>
+      <div class="text-slate-500 dot-typing">Ranking by relevance and recency</div>
+    </div>`;
+  messagesEl.appendChild(wrap);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return wrap;
+}
+
+function renderCitations(citations) {
+  if (!citations || !citations.length) return "";
+  return citations
+    .map(
+      (c) => `
+      <a href="${c.url}" target="_blank" rel="noopener"
+         class="block px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 mb-2">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-slate-900 text-white grid place-items-center text-[10px]">${c.n}</span>
+            <span class="font-medium text-slate-800">${c.title}</span>
+          </div>
+          ${chip(c.source)}
+        </div>
+        <div class="mt-1 text-xs text-slate-500 flex items-center gap-2">
+          <span>👤 ${c.author}</span>
+          <span>·</span>
+          <span>🕒 Updated ${c.updated_at_pretty}</span>
+        </div>
+      </a>`
+    )
+    .join("");
+}
+
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+// Extension → emoji. Keeps the snippet readable at a glance:
+// people scanning the answer see 📊 for spreadsheets, 📄 for docs, etc.
+const FILE_EMOJI = {
+  xlsx: "📊", xls: "📊", csv: "📊",
+  docx: "📄", doc: "📄",
+  pptx: "📽️", ppt: "📽️",
+  pdf: "📕",
+  zip: "🗜️",
+  png: "🖼️", jpg: "🖼️", jpeg: "🖼️", gif: "🖼️", svg: "🖼️",
+};
+
+// Turn markdown-style links inside a plain-text snippet into clickable pills.
+//   [Entitlement_Details_Template.xlsx](/static/attachments/...xlsx)
+//     → 📊 Entitlement_Details_Template.xlsx (open)
+// Runs on the already-HTML-escaped string, so `[` and `]` from source are
+// safe literals — only real markdown patterns match.
+function linkifyFileLinks(escapedText) {
+  // markdown link:  [text](url)  — both text and url are already html-escaped
+  const MD_LINK = /\[([^\[\]]+?)\]\(([^\s()]+)\)/g;
+  return escapedText.replace(MD_LINK, (_, label, url) => {
+    const ext = (label.match(/\.([a-z0-9]{1,5})$/i) || [,""])[1].toLowerCase();
+    const emoji = FILE_EMOJI[ext] || "🔗";
+    const isFile = !!FILE_EMOJI[ext];
+    return `<a class="file-link" href="${url}" target="_blank" rel="noopener" ${
+      isFile ? `download="${label}"` : ""
+    } title="${isFile ? "Download" : "Open"} ${label}">`
+      + `<span class="fl-emoji">${emoji}</span>`
+      + `<span>${label}</span>`
+      + `<span class="fl-open">${isFile ? "⬇" : "↗"}</span>`
+      + `</a>`;
+  });
+}
+
+function renderSnippet(c) {
+  if (c.snippet_kind === "table") return marked.parse(c.snippet || "");
+  return linkifyFileLinks(escapeHtml(c.snippet || ""));
+}
+
+function renderAttachments(atts) {
+  if (!atts || !atts.length) return "";
+  const chips = atts.map((a) => {
+    const ext = (a.ext || "").toLowerCase();
+    const badge = ext ? ext.toUpperCase() : "FILE";
+    return `
+      <a class="src-attach att-${escapeHtml(ext)}"
+         href="${a.url}"
+         download="${escapeHtml(a.name)}"
+         target="_blank" rel="noopener"
+         title="Download ${escapeHtml(a.name)}">
+        <span class="att-ic">${escapeHtml(badge)}</span>
+        <span class="att-name">${escapeHtml(a.name)}</span>
+        <span class="att-dl">⬇ Download</span>
+      </a>`;
+  }).join("");
+  return `<div class="src-attachments">${chips}</div>`;
+}
+
+function renderSingleCard(c) {
+  const badgeClass = `src-badge-${c.source}`;
+  const meta = SOURCE_META[c.source] || { label: c.source, icon: "📄" };
+  const isTable = c.snippet_kind === "table";
+  const snippetHtml = renderSnippet(c);
+  const snippetCls = "src-snippet" + (isTable ? " is-table" : "");
+  const heroLead = c.is_top && c.hero_lead
+    ? `<div class="src-hero-lead">${linkifyFileLinks(escapeHtml(c.hero_lead))}</div>`
+    : "";
+  const topPill = c.is_top ? `<span class="src-top-pill">⭐ Top match</span>` : "";
+  const cardCls = `src-card${c.is_latest ? " is-latest" : ""}${c.is_top ? " is-top" : ""}`;
+  return `
+    <div class="${cardCls}">
+      <div class="src-num">${c.n}</div>
+      <div>
+        <div class="src-head">
+          <a class="src-title" href="${c.url}" target="_blank" rel="noopener">${escapeHtml(c.title)}</a>
+          <span class="src-badge ${badgeClass}">${meta.icon} ${meta.label}</span>
+          ${topPill}
+          ${c.is_latest ? `<span class="src-latest-pill">🕒 Latest</span>` : ""}
+          <span class="src-meta">👤 ${escapeHtml(c.author)} · ${c.updated_at_pretty}</span>
+        </div>
+        ${heroLead}
+        <div class="${snippetCls}">${snippetHtml}</div>
+        ${renderAttachments(c.attachments)}
+      </div>
+    </div>`;
+}
+
+function renderSourceCards(cards) {
+  if (!cards || !cards.length) return "";
+  return `
+    <div class="src-cards">
+      ${cards.map((c) => {
+        const badgeClass = `src-badge-${c.source}`;
+        const meta = SOURCE_META[c.source] || { label: c.source, icon: "📄" };
+        const isTable = c.snippet_kind === "table";
+        // Table snippets are markdown → parsed via marked (renders <table>).
+        // Plain-text snippets are html-escaped, then any markdown-style file
+        // links are turned into emoji pills so users can click them.
+        const snippetHtml = renderSnippet(c);
+        const snippetCls = "src-snippet" + (isTable ? " is-table" : "");
+        const heroLead = c.is_top && c.hero_lead
+          ? `<div class="src-hero-lead">${linkifyFileLinks(escapeHtml(c.hero_lead))}</div>`
+          : "";
+        const topPill = c.is_top ? `<span class="src-top-pill">⭐ Top match</span>` : "";
+        const cardCls = `src-card${c.is_latest ? " is-latest" : ""}${c.is_top ? " is-top" : ""}`;
+        return `
+          <div class="${cardCls}">
+            <div class="src-num">${c.n}</div>
+            <div>
+              <div class="src-head">
+                <a class="src-title" href="${c.url}" target="_blank" rel="noopener">${escapeHtml(c.title)}</a>
+                <span class="src-badge ${badgeClass}">${meta.icon} ${meta.label}</span>
+                ${topPill}
+                ${c.is_latest ? `<span class="src-latest-pill">🕒 Latest</span>` : ""}
+                <span class="src-meta">👤 ${escapeHtml(c.author)} · ${c.updated_at_pretty}</span>
+              </div>
+              ${heroLead}
+              <div class="${snippetCls}">${snippetHtml}</div>
+              ${renderAttachments(c.attachments)}
+            </div>
+          </div>`;
+      }).join("")}
+    </div>`;
+}
+
+function renderLatest(latest) {
+  if (!latest) return "";
+  return `
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs">
+      🕒 <b>Latest source used:</b> ${latest.title}
+      ${chip(latest.source, "ml-1")}
+      <span class="opacity-70">· ${latest.updated_at_pretty}</span>
+    </div>`;
+}
+
+function renderAiMessage(payload) {
+  const t = document.getElementById("tpl-ai-msg").content.cloneNode(true);
+  t.querySelector(".answer").innerHTML = marked.parse(payload.answer || "");
+  t.querySelector(".src-cards-wrap").innerHTML = renderSourceCards(payload.source_cards);
+  t.querySelector(".latest").innerHTML = renderLatest(payload.latest_source);
+  t.querySelector(".citations").innerHTML = `
+    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Sources</div>
+    ${renderCitations(payload.citations)}
+  `;
+  messagesEl.appendChild(t);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function _sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+async function streamAiMessage(payload) {
+  const t = document.getElementById("tpl-ai-msg").content.cloneNode(true);
+  const answerEl = t.querySelector(".answer");
+  const cardsEl = t.querySelector(".src-cards-wrap");
+  const latestEl = t.querySelector(".latest");
+  const citationsEl = t.querySelector(".citations");
+  answerEl.classList.add("dot-typing");
+  messagesEl.appendChild(t);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+
+  const answerText = payload.answer || "";
+  // Slower, character-level typewriter — feels closer to a real chat assistant.
+  // Long answers speed up naturally so we don't stall for 10+ seconds.
+  const targetMs = 3200;
+  const perChar = Math.max(14, Math.min(28, Math.floor(targetMs / Math.max(60, answerText.length))));
+
+  let i = 0;
+  await new Promise((resolve) => {
+    function tick() {
+      if (i >= answerText.length) {
+        answerEl.classList.remove("dot-typing");
+        answerEl.innerHTML = marked.parse(answerText);
+        resolve();
+        return;
+      }
+      // One character per frame — feels like typing, not chunk-dumping.
+      i = Math.min(answerText.length, i + 1);
+      answerEl.textContent = answerText.slice(0, i);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      setTimeout(tick, perChar);
+    }
+    tick();
+  });
+
+  // Reveal source cards one at a time with a small stagger.
+  await _sleep(220);
+  const cards = payload.source_cards || [];
+  if (cards.length) {
+    cardsEl.innerHTML = `<div class="src-cards"></div>`;
+    const inner = cardsEl.querySelector(".src-cards");
+    for (const c of cards) {
+      inner.insertAdjacentHTML("beforeend", renderSingleCard(c));
+      inner.lastElementChild.classList.add("fade-in");
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      await _sleep(280);
+    }
+  }
+
+  await _sleep(160);
+  latestEl.innerHTML = renderLatest(payload.latest_source);
+  latestEl.classList.add("fade-in");
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+
+  await _sleep(240);
+  citationsEl.innerHTML = `
+    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Sources</div>
+    ${renderCitations(payload.citations)}
+  `;
+  citationsEl.classList.add("fade-in");
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function pushAiMessage(payload) {
+  state.history.push({ role: "ai", payload });
+  saveHistory();
+  await streamAiMessage(payload);
+}
+
+function wasHardReload() {
+  try {
+    const nav = performance.getEntriesByType("navigation")[0];
+    return nav && nav.type === "reload";
+  } catch {
+    return false;
+  }
+}
+
+function restoreHistory() {
+  if (wasHardReload()) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    state.history = [];
+    showHero();
+    return;
+  }
+  state.history = loadHistory();
+  if (!state.history.length) {
+    showHero();
+    return;
+  }
+  messagesEl.innerHTML = "";
+  for (const item of state.history) {
+    if (item.role === "user") renderUserMessage(item.text);
+    else if (item.role === "ai" && item.payload) renderAiMessage(item.payload);
+  }
+  showChat();
+}
+
+async function ask(query, opts = {}) {
+  showChat();
+  askBtn.disabled = true;
+  heroSend.disabled = true;
+  if (!opts.skipUserMessage) pushUserMessage(query);
+  const loader = pushLoading();
+  try {
+    const res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+        sources: Array.from(state.enabledSources),
+        apps: Array.from(state.enabledApps),
+        history: recentHistoryForApi(),
+        top_k: 6,
+      }),
+    });
+    const data = await res.json();
+    loader.remove();
+    await pushAiMessage(data);
+    // Refresh FAQ counts silently so the next hero-view shows the new tallies.
+    loadFaqs({ animate: false }).catch(() => {});
+  } catch (err) {
+    loader.remove();
+    await pushAiMessage({
+      answer: "Sorry — something went wrong reaching the copilot backend.",
+      citations: [],
+    });
+    console.error(err);
+  } finally {
+    askBtn.disabled = false;
+    heroSend.disabled = false;
+    qInput.value = "";
+    heroInput.value = "";
+    qInput.focus();
+  }
+}
+
+heroForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = heroInput.value.trim();
+  if (!q) return;
+  ask(q);
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = qInput.value.trim();
+  if (!q) return;
+  ask(q);
+});
+
+resetBtn.addEventListener("click", () => {
+  if (state.history.length && !confirm("Clear this chat and start fresh?")) return;
+  clearHistory();
+});
+
+initTheme();
+initDarkMode();
+initSidebar();
+restoreHistory();
+loadSources();
+</script>
+
+</body>
+</html>

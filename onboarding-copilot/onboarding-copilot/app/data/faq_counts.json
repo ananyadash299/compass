@@ -1,0 +1,473 @@
+{
+  "counts": {
+    "how do i get access to snowflake?": {
+      "display": "how do I get access to Snowflake?",
+      "count": 18,
+      "first_seen": "2026-09-17T07:14:47.128019+00:00",
+      "last_seen": "2026-09-19T10:07:23.081224+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "what is the ldap naming convention": {
+      "display": "what is the LDAP naming convention",
+      "count": 2,
+      "first_seen": "2026-09-17T07:14:47.190618+00:00",
+      "last_seen": "2026-09-17T07:14:47.210591+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "where is the rca template": {
+      "display": "where is the RCA template",
+      "count": 3,
+      "first_seen": "2026-09-17T07:14:47.231717+00:00",
+      "last_seen": "2026-09-17T08:28:30.304733+00:00",
+      "icon": "\ud83d\udcdd"
+    },
+    "abc adhoc release": {
+      "display": "abc adhoc release",
+      "count": 1,
+      "first_seen": "2026-09-17T07:16:29.677940+00:00",
+      "last_seen": "2026-09-17T07:16:29.677940+00:00",
+      "icon": "\ud83d\ude80"
+    },
+    "how do i get access to the finance bi snowflake warehouse?": {
+      "display": "How do I get access to the Finance BI Snowflake warehouse?",
+      "count": 1,
+      "first_seen": "2026-09-17T07:16:45.809595+00:00",
+      "last_seen": "2026-09-17T07:16:45.809595+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "i need docs for this application only": {
+      "display": "i need docs for this application only",
+      "count": 1,
+      "first_seen": "2026-09-17T07:52:12.149057+00:00",
+      "last_seen": "2026-09-17T07:52:12.149057+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "docs for this one?": {
+      "display": "docs for this one?",
+      "count": 1,
+      "first_seen": "2026-09-17T07:52:26.736356+00:00",
+      "last_seen": "2026-09-17T07:52:26.736356+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "give me the entitlement list": {
+      "display": "give me the entitlement list",
+      "count": 12,
+      "first_seen": "2026-09-17T08:11:08.812470+00:00",
+      "last_seen": "2026-09-18T11:33:42.192247+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "is it for abc?": {
+      "display": "is it for abc?",
+      "count": 1,
+      "first_seen": "2026-09-17T08:11:39.437124+00:00",
+      "last_seen": "2026-09-17T08:11:39.437124+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "entitlement list for abc": {
+      "display": "entitlement list for abc",
+      "count": 1,
+      "first_seen": "2026-09-17T08:11:54.862783+00:00",
+      "last_seen": "2026-09-17T08:11:54.862783+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "migration component for october release": {
+      "display": "migration component for October release",
+      "count": 3,
+      "first_seen": "2026-09-17T08:12:18.359975+00:00",
+      "last_seen": "2026-09-17T08:58:28.484211+00:00",
+      "icon": "\ud83d\ude80"
+    },
+    "show me abc_etl_db_unix_migration_changes docs": {
+      "display": "show me ABC_ETL_DB_Unix_Migration_Changes docs",
+      "count": 1,
+      "first_seen": "2026-09-17T08:13:41.768901+00:00",
+      "last_seen": "2026-09-17T08:13:41.768901+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "give me abc_etl_db_unix_migration_changes": {
+      "display": "give me ABC_ETL_DB_Unix_Migration_Changes",
+      "count": 1,
+      "first_seen": "2026-09-17T08:14:03.588965+00:00",
+      "last_seen": "2026-09-17T08:14:03.588965+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "etl db changes": {
+      "display": "etl db changes",
+      "count": 1,
+      "first_seen": "2026-09-17T08:15:02.081366+00:00",
+      "last_seen": "2026-09-17T08:15:02.081366+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "adhoc requests": {
+      "display": "adhoc requests",
+      "count": 1,
+      "first_seen": "2026-09-17T08:15:34.534489+00:00",
+      "last_seen": "2026-09-17T08:15:34.534489+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "onboarding checklist": {
+      "display": "onboarding checklist",
+      "count": 2,
+      "first_seen": "2026-09-17T08:16:02.486238+00:00",
+      "last_seen": "2026-09-17T08:29:54.630329+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "and who owns it?": {
+      "display": "and who owns it?",
+      "count": 2,
+      "first_seen": "2026-09-17T08:20:19.474332+00:00",
+      "last_seen": "2026-09-17T08:20:30.035201+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "etl migration runbook": {
+      "display": "ETL migration runbook",
+      "count": 2,
+      "first_seen": "2026-09-17T08:23:18.187297+00:00",
+      "last_seen": "2026-09-17T08:23:27.834578+00:00",
+      "icon": "\ud83d\ude80"
+    },
+    "what oim entitlements are available for abc and which are requestable?": {
+      "display": "What OIM entitlements are available for ABC and which are requestable?",
+      "count": 2,
+      "first_seen": "2026-09-17T08:56:55.490404+00:00",
+      "last_seen": "2026-09-17T08:57:01.539004+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "detailed unit testing for ssm october release": {
+      "display": "detailed unit testing for SSM October release",
+      "count": 1,
+      "first_seen": "2026-09-17T08:57:10.343981+00:00",
+      "last_seen": "2026-09-17T08:57:10.343981+00:00",
+      "icon": "\ud83d\ude80"
+    },
+    "epm migration components cutover window and rollback": {
+      "display": "EPM migration components cutover window and rollback",
+      "count": 1,
+      "first_seen": "2026-09-17T08:57:10.383606+00:00",
+      "last_seen": "2026-09-17T08:57:10.383606+00:00",
+      "icon": "\ud83d\ude80"
+    },
+    "give me the unit testing document for ssm": {
+      "display": "give me the unit testing document for ssm",
+      "count": 1,
+      "first_seen": "2026-09-17T15:25:18.665097+00:00",
+      "last_seen": "2026-09-17T15:25:18.665097+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "oim entitlement register for abc": {
+      "display": "OIM entitlement register for ABC",
+      "count": 1,
+      "first_seen": "2026-09-17T15:25:18.733282+00:00",
+      "last_seen": "2026-09-17T15:25:18.733282+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "migration components for epm": {
+      "display": "migration components for EPM",
+      "count": 1,
+      "first_seen": "2026-09-17T15:25:18.777336+00:00",
+      "last_seen": "2026-09-17T15:25:18.777336+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing documents for ssm": {
+      "display": "unit testing documents for ssm",
+      "count": 1,
+      "first_seen": "2026-09-17T15:29:56.973485+00:00",
+      "last_seen": "2026-09-17T15:29:56.973485+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "is there any unit testing documents from confluence and github?": {
+      "display": "is there any unit testing documents from confluence and github?",
+      "count": 1,
+      "first_seen": "2026-09-17T15:31:00.550178+00:00",
+      "last_seen": "2026-09-17T15:31:00.550178+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "any unit testing documents of ssm in confluence and github?": {
+      "display": "any unit testing documents of ssm in confluence and github?",
+      "count": 6,
+      "first_seen": "2026-09-17T15:31:56.181357+00:00",
+      "last_seen": "2026-09-17T17:20:26.009070+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing document for ssm in confluence": {
+      "display": "unit testing document for ssm in confluence",
+      "count": 1,
+      "first_seen": "2026-09-17T15:38:14.343934+00:00",
+      "last_seen": "2026-09-17T15:38:14.343934+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing document for ssm in sharepoint": {
+      "display": "unit testing document for ssm in sharepoint",
+      "count": 1,
+      "first_seen": "2026-09-17T15:38:14.392602+00:00",
+      "last_seen": "2026-09-17T15:38:14.392602+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing document for ssm": {
+      "display": "unit testing document for ssm",
+      "count": 5,
+      "first_seen": "2026-09-17T15:38:14.437227+00:00",
+      "last_seen": "2026-09-17T19:01:52.665941+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "any unit testing documents of ssm": {
+      "display": "any unit testing documents of ssm",
+      "count": 3,
+      "first_seen": "2026-09-17T15:39:16.322758+00:00",
+      "last_seen": "2026-09-17T17:20:36.253680+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "how do i get access to snowflake?asxasx": {
+      "display": "how do I get access to Snowflake?asxasx",
+      "count": 1,
+      "first_seen": "2026-09-17T15:46:37.411229+00:00",
+      "last_seen": "2026-09-17T15:46:37.411229+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "how do i get access to snowflake ad git": {
+      "display": "how do I get access to Snowflake ad git",
+      "count": 1,
+      "first_seen": "2026-09-17T15:53:21.303957+00:00",
+      "last_seen": "2026-09-17T15:53:21.303957+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "how do i get access to snowflake in confluence only?": {
+      "display": "how do I get access to Snowflake in confluence only?",
+      "count": 1,
+      "first_seen": "2026-09-17T16:02:20.913577+00:00",
+      "last_seen": "2026-09-17T16:02:20.913577+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "any unit testing documents of ssm anywhere": {
+      "display": "any unit testing documents of ssm anywhere",
+      "count": 2,
+      "first_seen": "2026-09-17T16:14:08.220530+00:00",
+      "last_seen": "2026-09-17T16:19:59.487858+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can you point these docs in github only?": {
+      "display": "can you point these docs in github only?",
+      "count": 5,
+      "first_seen": "2026-09-17T16:14:24.287887+00:00",
+      "last_seen": "2026-09-18T18:10:44.478682+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "not much helpful": {
+      "display": "not much helpful",
+      "count": 1,
+      "first_seen": "2026-09-17T16:15:22.005234+00:00",
+      "last_seen": "2026-09-17T16:15:22.005234+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can you help from anywhere?": {
+      "display": "can you help from anywhere?",
+      "count": 1,
+      "first_seen": "2026-09-17T16:21:33.945249+00:00",
+      "last_seen": "2026-09-17T16:21:33.945249+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "any unit testing documents of ssm anwhere?": {
+      "display": "any unit testing documents of ssm anwhere?",
+      "count": 1,
+      "first_seen": "2026-09-17T16:22:16.688517+00:00",
+      "last_seen": "2026-09-17T16:22:16.688517+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can you change the color to a readable format": {
+      "display": "can you change the color to a readable format",
+      "count": 1,
+      "first_seen": "2026-09-17T17:21:27.610512+00:00",
+      "last_seen": "2026-09-17T17:21:27.610512+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "oim entitlement register": {
+      "display": "OIM entitlement register",
+      "count": 2,
+      "first_seen": "2026-09-17T18:10:52.208920+00:00",
+      "last_seen": "2026-09-17T18:18:59.027187+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "rca template payment gateway outage": {
+      "display": "RCA template payment gateway outage",
+      "count": 1,
+      "first_seen": "2026-09-17T18:10:52.254249+00:00",
+      "last_seen": "2026-09-17T18:10:52.254249+00:00",
+      "icon": "\ud83d\udcdd"
+    },
+    "vpn setup for new joiner": {
+      "display": "VPN setup for new joiner",
+      "count": 1,
+      "first_seen": "2026-09-17T18:10:52.298102+00:00",
+      "last_seen": "2026-09-17T18:10:52.298102+00:00",
+      "icon": "\ud83d\udc4b"
+    },
+    "how do i request database credentials?": {
+      "display": "how do I request database credentials?",
+      "count": 1,
+      "first_seen": "2026-09-17T18:18:57.963952+00:00",
+      "last_seen": "2026-09-17T18:18:57.963952+00:00",
+      "icon": "\ud83d\udcc1"
+    },
+    "what do i need on my first day?": {
+      "display": "what do I need on my first day?",
+      "count": 1,
+      "first_seen": "2026-09-17T18:18:58.137869+00:00",
+      "last_seen": "2026-09-17T18:18:58.137869+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "postmortem for the payment outage": {
+      "display": "postmortem for the payment outage",
+      "count": 1,
+      "first_seen": "2026-09-17T18:18:59.076022+00:00",
+      "last_seen": "2026-09-17T18:18:59.076022+00:00",
+      "icon": "\ud83d\udcdd"
+    },
+    "steps to spin up my laptop": {
+      "display": "steps to spin up my laptop",
+      "count": 1,
+      "first_seen": "2026-09-17T18:18:59.123111+00:00",
+      "last_seen": "2026-09-17T18:18:59.123111+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "anything on bms?": {
+      "display": "anything on bms?",
+      "count": 4,
+      "first_seen": "2026-09-17T18:21:27.861152+00:00",
+      "last_seen": "2026-09-17T18:32:30.194271+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can i ask some other query?": {
+      "display": "can i ask some other query?",
+      "count": 3,
+      "first_seen": "2026-09-17T18:21:58.394548+00:00",
+      "last_seen": "2026-09-17T18:28:58.629798+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "newest one?": {
+      "display": "newest one?",
+      "count": 2,
+      "first_seen": "2026-09-17T18:28:59.003678+00:00",
+      "last_seen": "2026-09-17T18:32:30.111137+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "thanks!": {
+      "display": "thanks!",
+      "count": 1,
+      "first_seen": "2026-09-17T18:28:59.021491+00:00",
+      "last_seen": "2026-09-17T18:28:59.021491+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can you show me abc onboarding guide": {
+      "display": "can you show me abc onboarding guide",
+      "count": 1,
+      "first_seen": "2026-09-17T18:58:46.822431+00:00",
+      "last_seen": "2026-09-17T18:58:46.822431+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "great...show me abc onboarding new member": {
+      "display": "great...show me abc onboarding new member",
+      "count": 1,
+      "first_seen": "2026-09-17T18:59:09.023562+00:00",
+      "last_seen": "2026-09-17T18:59:09.023562+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing document": {
+      "display": "unit testing document",
+      "count": 1,
+      "first_seen": "2026-09-17T19:03:03.104630+00:00",
+      "last_seen": "2026-09-17T19:03:03.104630+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "unit testing document for abc": {
+      "display": "unit testing document for abc",
+      "count": 2,
+      "first_seen": "2026-09-17T19:03:25.299935+00:00",
+      "last_seen": "2026-09-17T19:04:43.526793+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "now check": {
+      "display": "now check",
+      "count": 1,
+      "first_seen": "2026-09-17T19:04:17.633660+00:00",
+      "last_seen": "2026-09-17T19:04:17.633660+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "migration document for epm": {
+      "display": "migration document for epm",
+      "count": 2,
+      "first_seen": "2026-09-17T19:06:45.516904+00:00",
+      "last_seen": "2026-09-17T19:08:04.539750+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "entitlement details template": {
+      "display": "Entitlement Details Template",
+      "count": 2,
+      "first_seen": "2026-09-18T10:20:23.877346+00:00",
+      "last_seen": "2026-09-18T10:25:01.089028+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "entitlement details": {
+      "display": "entitlement details",
+      "count": 1,
+      "first_seen": "2026-09-18T10:26:17.921952+00:00",
+      "last_seen": "2026-09-18T10:26:17.921952+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "entitlement det": {
+      "display": "entitlement det",
+      "count": 1,
+      "first_seen": "2026-09-18T10:28:36.841929+00:00",
+      "last_seen": "2026-09-18T10:28:36.841929+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "anything new?": {
+      "display": "anything new?",
+      "count": 1,
+      "first_seen": "2026-09-18T11:23:44.245816+00:00",
+      "last_seen": "2026-09-18T11:23:44.245816+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "can you explain logic how you calculated?": {
+      "display": "can you explain logic how you calculated?",
+      "count": 1,
+      "first_seen": "2026-09-18T11:26:24.459823+00:00",
+      "last_seen": "2026-09-18T11:26:24.459823+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "give me unit testing doc": {
+      "display": "GIVE ME UNIT TESTING DOC",
+      "count": 1,
+      "first_seen": "2026-09-18T17:03:07.962257+00:00",
+      "last_seen": "2026-09-18T17:03:07.962257+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "entitlement list": {
+      "display": "ENTITLEMENT LIST",
+      "count": 2,
+      "first_seen": "2026-09-18T17:03:49.532352+00:00",
+      "last_seen": "2026-09-18T18:11:10.999490+00:00",
+      "icon": "\ud83d\udd10"
+    },
+    "kt document": {
+      "display": "KT document",
+      "count": 1,
+      "first_seen": "2026-09-18T18:12:28.487665+00:00",
+      "last_seen": "2026-09-18T18:12:28.487665+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "migration components": {
+      "display": "Migration components",
+      "count": 1,
+      "first_seen": "2026-09-18T18:24:43.708365+00:00",
+      "last_seen": "2026-09-18T18:24:43.708365+00:00",
+      "icon": "\ud83d\udcac"
+    },
+    "who is the delivery lead": {
+      "display": "who is the delivery lead",
+      "count": 1,
+      "first_seen": "2026-09-18T18:25:16.991472+00:00",
+      "last_seen": "2026-09-18T18:25:16.991472+00:00",
+      "icon": "\ud83d\udcac"
+    }
+  }
+}
